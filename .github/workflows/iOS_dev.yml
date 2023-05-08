@@ -1,8 +1,6 @@
 name: iOS Package
 
 on:
-  push:
-    branches: [ feature/create ]
   workflow_dispatch:
     inputs:
       environment:
@@ -90,6 +88,7 @@ jobs:
         run: |
           pip3 install codemagic-cli-tools
           xcode-project use-profiles
+          pod cache clean --all
 
       - if: github.event.inputs.environment == 'prod'
         name: Building archive for prod
