@@ -7,8 +7,14 @@ on:
     branches: [ feature/create ]
   workflow_dispatch:
     inputs:
+      environment:
+        description: 'dev, prod'
+        required: true
+        default: 'prod'
       name:
         default: 'ios dev'
+env:
+  LANG: en_US.UTF-8
 
 jobs:
   build_and_deploy:
@@ -58,12 +64,21 @@ jobs:
           pip3 install codemagic-cli-tools
           xcode-project use-profiles
 
-      - name: Building archive
-        run: flutter build ios --flavor dev -t lib/main_dev.dart --no-codesign
-      - name: Building IPA
-        run: xcodebuild -exportArchive -archivePath build/ios/iphoneos/Runner dev.app -exportPath build/ios/ipa -exportOptionsPlist lib/ExportOptions.plist
-      - name: Update iOS ipa to Pgyer
-        run: curl -F "file=@build/ios/ipa/flutter_boilerplate_app.ipa" -F "uKey=77795d4fbdcc66711f199b1d4d87d50e" -F "_api_key=79fdd1bffed67da4ade389c32f866eba" https://upload.pgyer.com/apiv1/app/upload
+      - if: github.event.inputs.environment == 'prod'
+        name: Building archive for prod
+        run: |
+          flutter build ios --release --no-codesign
+          xcode-project build-ipa --workspace ios/Runner.xcworkspace --scheme Runner --config Release
+      - if: github.event.inputs.environment == 'dev'
+        name: Building archive for dev
+        run: |
+          flutter build ios --flavor dev -t lib/main_dev.dart
+          xcrun bitcode_strip build/ios/iphoneos/Runner\ dev.app/Frameworks/Flutter.framework/Flutter -r -o build/ios/iphoneos/Runner\ dev.app/Frameworks/Flutter.framework/Flutter
+          mkdir Payload
+          mv build/ios/iphoneos/Runner\ dev.app Payload
+          zip -r dev.ipa Payload
+#      - name: Update iOS ipa to Pgyer
+#        run: curl -F "file=@build/ios/ipa/flutter_boilerplate_app.ipa" -F "uKey=77795d4fbdcc66711f199b1d4d87d50e" -F "_api_key=79fdd1bffed67da4ade389c32f866eba" https://upload.pgyer.com/apiv1/app/upload
       - name: Clean up keychain and provisioning profile
         if: ${{ always() }}
         run: |
