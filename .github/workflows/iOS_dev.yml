@@ -3,13 +3,12 @@ name: iOS Dev
 on:
   pull_request:
     branches: [ develop ]
-    paths:
-      - 'lib/**'
   push:
     branches: [ feature/create ]
-    paths:
-      - 'lib/**' 
-
+  workflow_dispatch:
+    inputs:
+      name:
+        default: 'ios dev'
 
 jobs:
   build_and_deploy:
