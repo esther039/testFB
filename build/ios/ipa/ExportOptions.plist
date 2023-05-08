@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>generateAppStoreInformation</key>
+	<false/>
+	<key>manageAppVersionAndBuildNumber</key>
+	<true/>
+	<key>method</key>
+	<string>ad-hoc</string>
+	<key>signingStyle</key>
+	<string>manual</string>
+	<key>stripSwiftSymbols</key>
+	<true/>
+	<key>provisioningProfiles</key>
+	<dict>
+		<key>com.example.flutterBoilerplateAppForTest001</key>
+		<string>32e9cebde8ef411f284b414ee278b8e98e7d7a9a</string>
+	</dict>
+	<key>teamID</key>
+	<string>GZG2S47WHM</string>
+	<key>uploadSymbols</key>
+	<true/>
+</dict>
+</plist>
