@@ -1,6 +1,8 @@
 name: iOS Package
 
 on:
+  push:
+    branches: [ feature/create ]
   workflow_dispatch:
     inputs:
       environment:
