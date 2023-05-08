@@ -2,11 +2,11 @@ name: iOS Release
 
 on:
   pull_request:
-    branches: [ develop ]
+    branches: [ feature/create ]
     paths:
       - 'lib/**'
   push:
-    branches: [ feature/create ]
+    branches: [ feature/create_2 ]
     paths:
       - 'lib/**'
 
