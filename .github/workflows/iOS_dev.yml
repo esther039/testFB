@@ -62,15 +62,11 @@ jobs:
       - if: github.event.inputs.environment == 'prod'
         name: Building archive for prod
         run: |
-          flutter build ios --release --no-codesign
           xcode-project build-ipa --workspace ios/Runner.xcworkspace --scheme Runner --config Release
       - if: github.event.inputs.environment == 'dev'
         name: Building archive for dev
         run: |
-          flutter build ios --flavor dev -t lib/main_dev.dart
-          mkdir Payload
-          mv build/ios/iphoneos/Runner\ dev.app Payload
-          zip -r dev.ipa Payload
+          xcode-project build-ipa --workspace ios/Runner.xcworkspace --scheme dev --config Release
       - name: Update iOS ipa to Pgyer
         run: curl -F "file=@dev.ipa" -F "uKey=77795d4fbdcc66711f199b1d4d87d50e" -F "_api_key=79fdd1bffed67da4ade389c32f866eba" https://upload.pgyer.com/apiv1/app/upload
       - name: Clean up keychain and provisioning profile
