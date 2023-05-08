@@ -1,10 +1,6 @@
 name: iOS Dev
 
 on:
-  pull_request:
-    branches: [ develop ]
-  push:
-    branches: [ feature/create ]
   workflow_dispatch:
     inputs:
       environment:
@@ -72,7 +68,6 @@ jobs:
         name: Building archive for dev
         run: |
           flutter build ios --flavor dev -t lib/main_dev.dart
-          xcrun bitcode_strip build/ios/iphoneos/Runner\ dev.app/Frameworks/Flutter.framework/Flutter -r -o build/ios/iphoneos/Runner\ dev.app/Frameworks/Flutter.framework/Flutter
           mkdir Payload
           mv build/ios/iphoneos/Runner\ dev.app Payload
           zip -r dev.ipa Payload
