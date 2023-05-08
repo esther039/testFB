@@ -99,9 +99,14 @@ jobs:
         name: Building ipa for dev
         run: |
           flutter build ios --flavor dev -t lib/main_dev.dart 
-          xcode-project build-ipa --workspace ios/Runner.xcworkspace --scheme dev --config Release
-      - name: Update iOS ipa to Pgyer
-        run: curl -F "file=@dev.ipa" -F "uKey=77795d4fbdcc66711f199b1d4d87d50e" -F "_api_key=79fdd1bffed67da4ade389c32f866eba" https://upload.pgyer.com/apiv1/app/upload
+          xcodebuild -workspace ios/Runner.xcworkspace -scheme dev -config Release -archivePath build/ios/xcarchive/Runner_dev.xcarchive archive COMPILER_INDEX_STORE_ENABLE=NO DEVELOPMENT_TEAM=GZG2S47WHM 'CODE_SIGN_IDENTITY=Apple Distribution' CODE_SIGN_STYLE=Manual
+          xcodebuild -exportArchive -archivePath build/ios/xcarchive/Runner_dev.xcarchive -exportPath build/ios/ipa -exportOptionsPlist /Users/runner/export_options.plist COMPILER_INDEX_STORE_ENABLE=NO
+      - if: github.event.inputs.environment == 'prod'
+        name: Update iOS prod ipa to Pgyer
+        run: curl -F "file=@build/ios/ipa/flutter_boilerplate_app.ipa" -F "uKey=77795d4fbdcc66711f199b1d4d87d50e" -F "_api_key=79fdd1bffed67da4ade389c32f866eba" https://upload.pgyer.com/apiv1/app/upload
+      - if: github.event.inputs.environment == 'dev'
+        name: Update iOS dev ipa to Pgyer
+        run: curl -F "file=@build/ios/ipa/flutter_boilerplate_app.ipa" -F "uKey=77795d4fbdcc66711f199b1d4d87d50e" -F "_api_key=79fdd1bffed67da4ade389c32f866eba" https://upload.pgyer.com/apiv1/app/upload
       - name: Clean up keychain and provisioning profile
         if: ${{ always() }}
         run: |
