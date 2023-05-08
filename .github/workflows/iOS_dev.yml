@@ -11,8 +11,7 @@ on:
         description: 'dev, prod'
         required: true
         default: 'prod'
-      name:
-        default: 'ios dev'
+
 env:
   LANG: en_US.UTF-8
 
@@ -77,8 +76,8 @@ jobs:
           mkdir Payload
           mv build/ios/iphoneos/Runner\ dev.app Payload
           zip -r dev.ipa Payload
-#      - name: Update iOS ipa to Pgyer
-#        run: curl -F "file=@build/ios/ipa/flutter_boilerplate_app.ipa" -F "uKey=77795d4fbdcc66711f199b1d4d87d50e" -F "_api_key=79fdd1bffed67da4ade389c32f866eba" https://upload.pgyer.com/apiv1/app/upload
+      - name: Update iOS ipa to Pgyer
+        run: curl -F "file=@dev.ipa" -F "uKey=77795d4fbdcc66711f199b1d4d87d50e" -F "_api_key=79fdd1bffed67da4ade389c32f866eba" https://upload.pgyer.com/apiv1/app/upload
       - name: Clean up keychain and provisioning profile
         if: ${{ always() }}
         run: |
