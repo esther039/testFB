@@ -99,7 +99,7 @@ jobs:
         name: Building ipa for dev
         run: |
           flutter build ios --flavor dev -t lib/main_dev.dart 
-          xcodebuild -workspace ios/Runner.xcworkspace -scheme dev -config Release -archivePath build/ios/xcarchive/Runner_dev.xcarchive archive COMPILER_INDEX_STORE_ENABLE=NO DEVELOPMENT_TEAM=GZG2S47WHM 'CODE_SIGN_IDENTITY=Apple Distribution' CODE_SIGN_STYLE=Manual
+          xcodebuild -workspace ios/Runner.xcworkspace -scheme dev -sdk iphoneos -configuration Release archive -archivePath build/ios/xcarchive/Runner_dev.xcarchive
           xcodebuild -exportArchive -archivePath build/ios/xcarchive/Runner_dev.xcarchive -exportPath build/ios/ipa -exportOptionsPlist /Users/runner/export_options.plist COMPILER_INDEX_STORE_ENABLE=NO
       - if: github.event.inputs.environment == 'prod'
         name: Update iOS prod ipa to Pgyer
