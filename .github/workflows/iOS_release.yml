@@ -62,8 +62,15 @@ jobs:
         run: flutter build ios --release --no-codesign
       - name: Building IPA
         run: xcode-project build-ipa --workspace ios/Runner.xcworkspace --scheme Runner --config Release
-      - name: Update iOS ipa to Pgyer
-        run: curl -F "file=@build/ios/ipa/flutter_boilerplate_app.ipa" -F "uKey=77795d4fbdcc66711f199b1d4d87d50e" -F "_api_key=79fdd1bffed67da4ade389c32f866eba" https://upload.pgyer.com/apiv1/app/upload
+#      - name: Update iOS ipa to Pgyer
+#        run: curl -F "file=@build/ios/ipa/flutter_boilerplate_app.ipa" -F "uKey=77795d4fbdcc66711f199b1d4d87d50e" -F "_api_key=79fdd1bffed67da4ade389c32f866eba" https://upload.pgyer.com/apiv1/app/upload
+      - name: 'Upload app to TestFlight'
+        uses: apple-actions/upload-testflight-build@v1
+        with:
+          app-path: 'build/ios/ipa/flutter_boilerplate_app.ipa'
+          issuer-id: '58af71e1-9a4a-45af-a1ba-1544ed193087'
+          api-key-id: 'JZQ2DP57F4'
+          api-private-key: 'LS0tLS1CRUdJTiBQUklWQVRFIEtFWS0tLS0tCk1JR1RBZ0VBTUJNR0J5cUdTTTQ5QWdFR0NDcUdTTTQ5QXdFSEJIa3dkd0lCQVFRZzVtUjgvVjcydkNuQ2I0cGUKVHgyZWI4UTlWRHhHWXNBTEZUbThoNjF5bExLZ0NnWUlLb1pJemowREFRZWhSQU5DQUFRNEhwUzJBczRlcU1LQwpGTVBGSlk1c3laclk0OHBlSi9EMmhGM1ppcmVYQm1mNE5rQmFUL1BIdXNOaTdtRzA0eGc1YVZLT2NIZEpkUkp4ClZ3ZlVaanA0Ci0tLS0tRU5EIFBSSVZBVEUgS0VZLS0tLS0='
       - name: Clean up keychain and provisioning profile
         if: ${{ always() }}
         run: |
