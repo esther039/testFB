@@ -93,6 +93,7 @@ jobs:
       - if: github.event.inputs.environment == 'prod'
         name: Building ipa for prod
         run: |
+          flutter build ios-framework
           xcode-project build-ipa --workspace ios/Runner.xcworkspace --scheme Runner --config Release
       - if: github.event.inputs.environment == 'dev'
         name: Building ipa for dev
