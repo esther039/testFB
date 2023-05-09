@@ -108,8 +108,8 @@ jobs:
         with:
           app-path: 'build/ios/ipa/flutter_boilerplate_app.ipa'
           issuer-id: '58af71e1-9a4a-45af-a1ba-1544ed193087'
-          api-key-id: 'JZQ2DP57F4'
-          api-private-key: 'MIGTAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBHkwdwIBAQQg5mR8/V72vCnCb4peTx2eb8Q9VDxGYsALFTm8h61ylLKgCgYIKoZIzj0DAQehRANCAAQ4HpS2As4eqMKCFMPFJY5syZrY48peJ/D2hF3ZireXBmf4NkBaT/PHusNi7mG04xg5aVKOcHdJdRJxVwfUZjp4'
+          api-key-id: 'N2448JQDT8'
+          api-private-key: 'MIGTAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBHkwdwIBAQQgJv+Y2TrzDe7cHg9nCLSar9OfXKFwNx5RQC984S6RNY6gCgYIKoZIzj0DAQehRANCAASIBzcEJrgGEd9KP6mZTTbGsZGZHyCE5DNOtJ18oDEgbZpjWIYNqcWuHUDEtOlZTcsuc1yy814NbRq3UYOtqP1z'
       - name: Clean up keychain and provisioning profile
         if: ${{ always() }}
         run: |
