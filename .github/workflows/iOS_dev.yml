@@ -126,17 +126,51 @@ jobs:
 #          API_KEY: N2448JQDT8
 #          API_ISSUER: 58af71e1-9a4a-45af-a1ba-1544ed193087
 #        run: xcrun altool --output-format xml --upload-app -f build/ios/ipa/flutter_boilerplate_app.ipa -t ios --apiKey $API_KEY --apiIssuer $API_ISSUER
-      - name: Send custom JSON data to Slack workflow
-        id: slack
-        uses: slackapi/slack-github-action@v1.23.0
-        with:
-          payload: |
-            {
-              "text": "Here, We have a new build for flutter_boilerplate"
-            }
+      - name: Slack Notification on SUCCESS
+        if: success()
+        uses: tokorom/action-slack-incoming-webhook@main
         env:
-          SLACK_WEBHOOK_URL: https://hooks.slack.com/services/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
-          SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
+          INCOMING_WEBHOOK_URL: https://hooks.slack.com/services/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
+        with:
+          text: A release is published.
+          blocks: |
+            [
+              {
+                "type": "header",
+                "text": {
+                  "type": "plain_text",
+                  "text": "${{ github.event.release.tag_name}} is published!"
+                }
+              },
+              {
+                "type": "section",
+                "text": {
+                  "type": "mrkdwn",
+                  "text": "*Author:*\n${{ github.actor }}"
+                }
+              },
+              {
+                 "type": "section",
+                 "text": {
+                   "type": "mrkdwn",
+                   "text": "*Information:*"
+                 }
+              },
+              {
+                 "type": "section",
+                 "text": {
+                   "type": "mrkdwn",
+                   "text": ${{ toJSON(github.event.release.body) }}
+                 }
+              },
+              {
+                 "type": "section",
+                 "text": {
+                   "type": "mrkdwn",
+                   "text": "${{ github.event.release.html_url }}"
+                 }
+              }
+            ]
 #      - name: Increase Build Number
 #        run: agvtool next-version -all
 #      - name: Clean up keychain and provisioning profile
