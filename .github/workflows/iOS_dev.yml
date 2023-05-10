@@ -32,7 +32,7 @@ jobs:
       - name: update build number
         run: |
           cd ios
-          agvtool new-version -all
+          agvtool next-version -all
 #      - name: Update Flutter
 #        run: flutter upgrade
 #      - name: Install Dependencies
