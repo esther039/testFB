@@ -32,7 +32,7 @@ jobs:
       - name: update build number
         run: |
           cd ios
-          agvtool new-version -all ${{ step.getBuildNumber }}
+          agvtool new-version -all ${{ step.getBuildNumber.outputs.build_number }}
 #      - name: Update Flutter
 #        run: flutter upgrade
 #      - name: Install Dependencies
