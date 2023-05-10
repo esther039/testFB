@@ -152,7 +152,7 @@
 				97C146EC1CF9000F007C117D /* Resources */,
 				9705A1C41CF9048500538489 /* Embed Frameworks */,
 				3B06AD1E1E4923F5004D2608 /* Thin Binary */,
-				BB05CAE8C6462FDEF2158481 /* [CP] Embed Pods Frameworks */,
+				857EEC662A0B6C1600A20AB8 /* Increase Build Number */,
 			);
 			buildRules = (
 			);
@@ -251,6 +251,24 @@
 			shellPath = /bin/sh;
 			shellScript = "/bin/sh \"$FLUTTER_ROOT/packages/flutter_tools/bin/xcode_backend.sh\" embed_and_thin";
 		};
+		857EEC662A0B6C1600A20AB8 /* Increase Build Number */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Increase Build Number";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "INCREASE_WHEN_BUILD=0\n\nBuildConfigurationFlag=\"Debug\"\n\nBuildNumber=1\n\nif [ $INCREASE_WHEN_BUILD -eq 0 ]; then\n    BuildConfigurationFlag=\"Release\"\nfi\n\necho \"当前Xcode的Build Configuration: $CONFIGURATION\"\nif [ $BuildConfigurationFlag == \"${CONFIGURATION}\" ]; then\n    BuildVersionOfInfo=\"1\" \n    BuildVersionOfConfig=\"1\"\n\n    BuildVersionOfInfo=$(/usr/libexec/PlistBuddy -c \"Print :CFBundleVersion\" \"${INFOPLIST_FILE}\")\n    BuildVersionOfConfig=${CURRENT_PROJECT_VERSION}\n\n    if [ $BuildVersionOfInfo == '$(CURRENT_PROJECT_VERSION)' ]; then\n        BuildNumber=${CURRENT_PROJECT_VERSION}\n    else\n        # 取较大值\n        if [ $BuildVersionOfInfo -ge $BuildVersionOfConfig ]; then\n            BuildNumber=$BuildVersionOfInfo\n        else\n            BuildNumber=$BuildVersionOfConfig\n        fi\n    fi\n    \n    BuildNumber=$(($BuildNumber + 1))\n    \n    /usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $BuildNumber\" \"${INFOPLIST_FILE}\"\n    \n    echo \"Build version need increase\"\nelse\n    echo \"Build version don't need increase\"\nfi\n# Type a script or drag a script file from your workspace to insert its path.\n";
+		};
 		9740EEB61CF901F6004384FC /* Run Script */ = {
 			isa = PBXShellScriptBuildPhase;
 			alwaysOutOfDate = 1;
@@ -265,23 +283,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "/bin/sh \"$FLUTTER_ROOT/packages/flutter_tools/bin/xcode_backend.sh\" build\n";
-		};
-		BB05CAE8C6462FDEF2158481 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Runner/Pods-Runner-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Runner/Pods-Runner-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Runner/Pods-Runner-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
 
