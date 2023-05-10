@@ -130,7 +130,7 @@ jobs:
         if: success()
         uses: tokorom/action-slack-incoming-webhook@main
         env:
-          INCOMING_WEBHOOK_URL: https://hooks.slack.com/services/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
+          INCOMING_WEBHOOK_URL: https://hooks.slack.com/services/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
         with:
           text: A release is published.
           blocks: |
@@ -148,29 +148,31 @@ jobs:
                   "type": "mrkdwn",
                   "text": "*Author:*\n${{ github.actor }}"
                 }
-              },
-              {
-                 "type": "section",
-                 "text": {
-                   "type": "mrkdwn",
-                   "text": "*Information:*"
-                 }
-              },
-              {
-                 "type": "section",
-                 "text": {
-                   "type": "mrkdwn",
-                   "text": ${{ toJSON(github.event.release.body) }}
-                 }
-              },
-              {
-                 "type": "section",
-                 "text": {
-                   "type": "mrkdwn",
-                   "text": "${{ github.event.release.html_url }}"
-                 }
               }
             ]
+#                    ,
+#              {
+#                 "type": "section",
+#                 "text": {
+#                   "type": "mrkdwn",
+#                   "text": "*Information:*"
+#                 }
+#              },
+#              {
+#                 "type": "section",
+#                 "text": {
+#                   "type": "mrkdwn",
+#                   "text": ${{ toJSON(github.event.release.body) }}
+#                 }
+#              },
+#              {
+#                 "type": "section",
+#                 "text": {
+#                   "type": "mrkdwn",
+#                   "text": "${{ github.event.release.html_url }}"
+#                 }
+#              }
+#            ]
 #      - name: Increase Build Number
 #        run: agvtool next-version -all
 #      - name: Clean up keychain and provisioning profile
