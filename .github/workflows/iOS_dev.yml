@@ -114,13 +114,6 @@ jobs:
           xcodebuild -exportArchive -archivePath build/ios/xcarchive/Runner_dev.xcarchive -exportPath build/ios/ipa -exportOptionsPlist /Users/runner/export_options.plist COMPILER_INDEX_STORE_ENABLE=NO
 ##      - name: Update iOS ipa to Pgyer
 ##        run: curl -F "file=@build/ios/ipa/flutter_boilerplate_app.ipa" -F "uKey=77795d4fbdcc66711f199b1d4d87d50e" -F "_api_key=79fdd1bffed67da4ade389c32f866eba" https://upload.pgyer.com/apiv1/app/upload
-      - name: 'Upload app to TestFlight'
-        uses: apple-actions/upload-testflight-build@v1
-        with:
-          app-path: 'build/ios/ipa/flutter_boilerplate_app.ipa'
-          issuer-id: '58af71e1-9a4a-45af-a1ba-1544ed193087'
-          api-key-id: 'N2448JQDT8'
-          api-private-key: 'MIGTAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBHkwdwIBAQQgJv+Y2TrzDe7cHg9nCLSar9OfXKFwNx5RQC984S6RNY6gCgYIKoZIzj0DAQehRANCAASIBzcEJrgGEd9KP6mZTTbGsZGZHyCE5DNOtJ18oDEgbZpjWIYNqcWuHUDEtOlZTcsuc1yy814NbRq3UYOtqP1z'
       - name: Install private API key P8
         env:
           PRIVATE_API_KEY_BASE64: LS0tLS1CRUdJTiBQUklWQVRFIEtFWS0tLS0tCk1JR1RBZ0VBTUJNR0J5cUdTTTQ5QWdFR0NDcUdTTTQ5QXdFSEJIa3dkd0lCQVFRZ0p2K1kyVHJ6RGU3Y0hnOW4KQ0xTYXI5T2ZYS0Z3Tng1UlFDOTg0UzZSTlk2Z0NnWUlLb1pJemowREFRZWhSQU5DQUFTSUJ6Y0VKcmdHRWQ5SwpQNm1aVFRiR3NaR1pIeUNFNUROT3RKMThvREVnYlpwaldJWU5xY1d1SFVERXRPbFpUY3N1YzF5eTgxNE5iUnEzClVZT3RxUDF6Ci0tLS0tRU5EIFBSSVZBVEUgS0VZLS0tLS0=
@@ -128,11 +121,28 @@ jobs:
         run: |
           mkdir -p ~/private_keys
           echo -n "$PRIVATE_API_KEY_BASE64" | base64 --decode --output ~/private_keys/AuthKey_$API_KEY.p8
+      - name: 'Upload app to TestFlight'
+        uses: apple-actions/upload-testflight-build@v1
+        with:
+          app-path: 'build/ios/ipa/flutter_boilerplate_app.ipa'
+          issuer-id: '58af71e1-9a4a-45af-a1ba-1544ed193087'
+          api-key-id: 'N2448JQDT8'
+          api-private-key: 'MIGTAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBHkwdwIBAQQgJv+Y2TrzDe7cHg9nCLSar9OfXKFwNx5RQC984S6RNY6gCgYIKoZIzj0DAQehRANCAASIBzcEJrgGEd9KP6mZTTbGsZGZHyCE5DNOtJ18oDEgbZpjWIYNqcWuHUDEtOlZTcsuc1yy814NbRq3UYOtqP1z'
       - name: Upload app to TestFlight
         env:
           API_KEY: N2448JQDT8
           API_ISSUER: 58af71e1-9a4a-45af-a1ba-1544ed193087
         run: xcrun altool --output-format xml --upload-app -f build/ios/ipa/flutter_boilerplate_app.ipa -t ios --apiKey $API_KEY --apiIssuer $API_ISSUER
+      - name: Send custom JSON data to Slack workflow
+        id: slack
+        uses: slackapi/slack-github-action@v1.23.0
+        with:
+          payload: |
+            {
+              "text": "Here, We have a new build for flutter_boilerplate"
+            }
+        env:
+          SLACK_WEBHOOK_URL: https://hooks.slack.com/services/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
       - name: Increase Build Number
         run: agvtool next-version -all
       - name: Clean up keychain and provisioning profile
