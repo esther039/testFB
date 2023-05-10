@@ -27,7 +27,12 @@ jobs:
         with:
           token: ${{secrets.github_token}}
       - name: Print new build number
+        id: getBuildNumber
         run: echo "Build number is $BUILD_NUMBER"
+      - name: update build number
+        run: |
+          cd ios
+          agvtool new-version -all ${{ step.getBuildNumber }}
 #      - name: Update Flutter
 #        run: flutter upgrade
 #      - name: Install Dependencies
@@ -111,8 +116,8 @@ jobs:
 #          flutter build ios --flavor dev -t lib/main_dev.dart
 #          xcodebuild -workspace ios/Runner.xcworkspace -scheme dev -sdk iphoneos -configuration Release archive -archivePath build/ios/xcarchive/Runner_dev.xcarchive
 #          xcodebuild -exportArchive -archivePath build/ios/xcarchive/Runner_dev.xcarchive -exportPath build/ios/ipa -exportOptionsPlist /Users/runner/export_options.plist COMPILER_INDEX_STORE_ENABLE=NO
-#      - name: Update iOS ipa to Pgyer
-#        run: curl -F "file=@build/ios/ipa/flutter_boilerplate_app.ipa" -F "uKey=77795d4fbdcc66711f199b1d4d87d50e" -F "_api_key=79fdd1bffed67da4ade389c32f866eba" https://upload.pgyer.com/apiv1/app/upload
+##      - name: Update iOS ipa to Pgyer
+##        run: curl -F "file=@build/ios/ipa/flutter_boilerplate_app.ipa" -F "uKey=77795d4fbdcc66711f199b1d4d87d50e" -F "_api_key=79fdd1bffed67da4ade389c32f866eba" https://upload.pgyer.com/apiv1/app/upload
 #      - name: 'Upload app to TestFlight'
 #        uses: apple-actions/upload-testflight-build@v1
 #        with:
