@@ -130,13 +130,26 @@ jobs:
         id: slack
         uses: slackapi/slack-github-action@v1.23.0
         with:
-          slack-message: "Here, We have a new build for flutter_boilerplate"
+          payload: |
+            {
+              "text": "Here, We have a new build for flutter_boilerplate",
+              "blocks": [
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": "GitHub Action build result: ${{ job.status }}"
+                  }
+                }
+              ]
+            }
         env:
           SLACK_WEBHOOK_URL: https://hooks.slack.com/services/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
-      - name: Increase Build Number
-        run: agvtool next-version -all
-      - name: Clean up keychain and provisioning profile
-        if: ${{ always() }}
-        run: |
-          security delete-keychain $RUNNER_TEMP/app-signing.keychain-db
-          rm ~/Library/MobileDevice/Provisioning\ Profiles/build_pp.mobileprovision
+          SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
+#      - name: Increase Build Number
+#        run: agvtool next-version -all
+#      - name: Clean up keychain and provisioning profile
+#        if: ${{ always() }}
+#        run: |
+#          security delete-keychain $RUNNER_TEMP/app-signing.keychain-db
+#          rm ~/Library/MobileDevice/Provisioning\ Profiles/build_pp.mobileprovision
