@@ -16,8 +16,8 @@ jobs:
     permissions: write-all
     runs-on: macOS-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
+#      - name: Checkout
+#        uses: actions/checkout@v2
 #      - name: Setup Flutter
 #        uses: subosito/flutter-action@v1
 #        with:
@@ -132,16 +132,7 @@ jobs:
         with:
           payload: |
             {
-              "text": "Here, We have a new build for flutter_boilerplate",
-              "blocks": [
-                {
-                  "type": "section",
-                  "text": {
-                    "type": "mrkdwn",
-                    "text": "GitHub Action build result: ${{ job.status }}"
-                  }
-                }
-              ]
+              "text": "Here, We have a new build for flutter_boilerplate"
             }
         env:
           SLACK_WEBHOOK_URL: https://hooks.slack.com/services/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
