@@ -122,6 +122,8 @@ jobs:
           API_KEY: N2448JQDT8
           API_ISSUER: 58af71e1-9a4a-45af-a1ba-1544ed193087
         run: xcrun altool --output-format xml --upload-app -f build/ios/ipa/flutter_boilerplate_app.ipa -t ios --apiKey $API_KEY --apiIssuer $API_ISSUER
+      - name: Increase Build Number
+        run: agvtool next-version -all
       - name: Clean up keychain and provisioning profile
         if: ${{ always() }}
         run: |
