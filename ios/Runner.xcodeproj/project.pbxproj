@@ -153,7 +153,6 @@
 				9705A1C41CF9048500538489 /* Embed Frameworks */,
 				3B06AD1E1E4923F5004D2608 /* Thin Binary */,
 				BB05CAE8C6462FDEF2158481 /* [CP] Embed Pods Frameworks */,
-				857EEC642A0B318F00A20AB8 /* Build Number Increase */,
 			);
 			buildRules = (
 			);
@@ -252,24 +251,6 @@
 			shellPath = /bin/sh;
 			shellScript = "/bin/sh \"$FLUTTER_ROOT/packages/flutter_tools/bin/xcode_backend.sh\" embed_and_thin";
 		};
-		857EEC642A0B318F00A20AB8 /* Build Number Increase */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			name = "Build Number Increase";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "INCREASE_WHEN_BUILD=0\n\nBuildConfigurationFlag=\"Debug\"\n\nBuildNumber=1 \n\n\nif [ $INCREASE_WHEN_BUILD -eq 0 ]; then\n    BuildConfigurationFlag=\"Release\"\nfi\n\necho \"current Xcode Build Configuration: $CONFIGURATION\"\nif [ $BuildConfigurationFlag == \"${CONFIGURATION}\" ]; then\n    BuildVersionOfInfo=\"1\" \n    BuildVersionOfConfig=\"1\"\n\n    BuildVersionOfInfo=$(/usr/libexec/PlistBuddy -c \"Print :CFBundleVersion\" \"${INFOPLIST_FILE}\")\n    BuildVersionOfConfig=${CURRENT_PROJECT_VERSION}\n    \n    if [ $BuildVersionOfInfo == '$(CURRENT_PROJECT_VERSION)' ]; then\n        BuildNumber=${CURRENT_PROJECT_VERSION}\n    else\n        if [ $BuildVersionOfInfo -ge $BuildVersionOfConfig ]; then\n            BuildNumber=$BuildVersionOfInfo\n        else\n            BuildNumber=$BuildVersionOfConfig\n        fi\n    fi\n    \n    BuildNumber=$(($BuildNumber + 1))\n    \n    /usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $BuildNumber\" \"${INFOPLIST_FILE}\"\n    \n    echo \"Build version need increase\"\nelse\n    echo \"Build version don't need increase\"\nfi Type a script or drag a script file from your workspace to insert its path.\n# Type a script or drag a script file from your workspace to insert its path.\n";
-		};
 		9740EEB61CF901F6004384FC /* Run Script */ = {
 			isa = PBXShellScriptBuildPhase;
 			alwaysOutOfDate = 1;
@@ -283,7 +264,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "/bin/sh \"$FLUTTER_ROOT/packages/flutter_tools/bin/xcode_backend.sh\" build";
+			shellScript = "/bin/sh \"$FLUTTER_ROOT/packages/flutter_tools/bin/xcode_backend.sh\" build\n";
 		};
 		BB05CAE8C6462FDEF2158481 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
