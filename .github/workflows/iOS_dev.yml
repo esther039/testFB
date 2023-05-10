@@ -90,7 +90,9 @@ jobs:
           xcode-project use-profiles
           pod cache clean --all
       - name: Increase Build Number
-        run: agvtool next-version -all
+        run: |
+          cd ios
+          agvtool next-version -all
       - if: github.event.inputs.environment == 'prod'
         name: Building ipa for prod
         run: |
