@@ -22,17 +22,17 @@ jobs:
         uses: subosito/flutter-action@v1
         with:
           flutter-version: '2.8.1'
-      - name: Generate build number
-        uses: onyxmueller/build-tag-number@v1
-        with:
-          token: ${{secrets.github_token}}
-      - name: Print new build number
-        id: getBuildNumber
-        run: echo "Build number is $BUILD_NUMBER"
+#      - name: Generate build number
+#        uses: onyxmueller/build-tag-number@v1
+#        with:
+#          token: ${{secrets.github_token}}
+#      - name: Print new build number
+#        id: getBuildNumber
+#        run: echo "Build number is $BUILD_NUMBER"
       - name: update build number
         run: |
           cd ios
-          agvtool new-version -all $BUILD_NUMBER
+          agvtool new-version -all
 #      - name: Update Flutter
 #        run: flutter upgrade
 #      - name: Install Dependencies
