@@ -100,7 +100,7 @@ jobs:
       - name: Get version
         id: get_version
         run: |
-          cd ios/flutter
+          cd ios/Flutter
           cat Generated.xcconfig
           grep FLUTTER_BUILD_NAME Generated.xcconfig | cut -d'=' -f2
 #      - name: Show version
