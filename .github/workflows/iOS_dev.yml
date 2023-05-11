@@ -111,7 +111,7 @@ jobs:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_URL }}
           SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
       - name: Send custom JSON data to Slack workflow
-        if: fail()
+        if: failure()
         uses: slackapi/slack-github-action@v1.18.0
         with:
           payload: "{\"text\": \"hey there, flutter_boilerplate ${{ env.BuildNumber }} is fail to publish!\\nAuthor: ${{github.actor}}\"}"
