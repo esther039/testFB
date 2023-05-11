@@ -126,26 +126,17 @@ jobs:
 #          API_KEY: N2448JQDT8
 #          API_ISSUER: 58af71e1-9a4a-45af-a1ba-1544ed193087
 #        run: xcrun altool --output-format xml --upload-app -f build/ios/ipa/flutter_boilerplate_app.ipa -t ios --apiKey $API_KEY --apiIssuer $API_ISSUER
-      - name: Post to a Slack channel
+      - name: Send custom JSON data to Slack workflow
         id: slack
         uses: slackapi/slack-github-action@v1.23.0
         with:
-          channel-id: 'U01R7APFZC7'
+          # This data can be any valid JSON from a previous step in the GitHub Action
           payload: |
             {
-              "text": "GitHub Action build result: ${{ job.status }}\n",
-              "blocks": [
-                {
-                  "type": "section",
-                  "text": {
-                    "type": "mrkdwn",
-                    "text": "GitHub Action build result: ${{ job.status }}\n"
-                  }
-                }
-              ]
+              "text": "GitHub Action build result: ${{ job.status }}\n"
             }
         env:
-          SLACK_BOT_TOKEN: xoxb-2152829379-5239090487446-WbxyVRApiboHsegYKKesvjRI
+          SLACK_WEBHOOK_URL: https://hooks.slack.com/services/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
 #                    ,
 #              {
 #                 "type": "section",
