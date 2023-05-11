@@ -18,16 +18,16 @@ jobs:
     permissions: write-all
     runs-on: macOS-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      - name: Setup Flutter
-        uses: subosito/flutter-action@v1
-        with:
-          flutter-version: '2.8.1'
-      - name: Update Flutter
-        run: flutter upgrade
-      - name: Install Dependencies
-        run: flutter pub get
+#      - name: Checkout
+#        uses: actions/checkout@v2
+#      - name: Setup Flutter
+#        uses: subosito/flutter-action@v1
+#        with:
+#          flutter-version: '2.8.1'
+#      - name: Update Flutter
+#        run: flutter upgrade
+#      - name: Install Dependencies
+#        run: flutter pub get
 #      - if: github.event.inputs.environment == 'prod'
 #        name: Install the Apple certificate and provisioning profile for prod
 #        env:
@@ -91,24 +91,26 @@ jobs:
 #          pip3 install codemagic-cli-tools
 #          xcode-project use-profiles
 #          pod cache clean --all
-      - name: Set current date as env variable
-        run: echo "BuildNumber=$(date +'%Y.%m.%d.%H.%M')" >> $GITHUB_ENV
-      - name: update build number
-        run: |
-          cd ios
-          agvtool new-version -all ${{ env.BuildNumber }}
-      - name: Get version
-        id: get_version
-        run: |
-          cd ios
-          agvtool what-marketing-version
-      - name: Show version
-        run: echo "BuildVersion=${{steps.get_verion.outputs}}" >> $GITHUB_ENV
+#      - name: Set current date as env variable
+#        run: echo "BuildNumber=$(date +'%Y.%m.%d.%H.%M')" >> $GITHUB_ENV
+#      - name: update build number
+#        run: |
+#          cd ios
+#          agvtool new-version -all ${{ env.BuildNumber }}
+#      - name: Get version
+#        id: get_version
+#        run: |
+#          cd ios
+#          agvtool what-marketing-version
+#      - name: Show version
+#        run: echo "BuildVersion=${{steps.get_verion.outputs}}" >> $GITHUB_ENV
       - name: Send custom JSON data to Slack workflow
         if: success()
         uses: slackapi/slack-github-action@v1.18.0
         with:
-          payload: "{\"text\": \"hey there, flutter_boilerplate ${{ env.BuildNumber }} ispublished!\\nAuthor: ${{github.actor}}\"}"
+          [qrcode](#{@qrcode_url})
+          payload: "{\"text\": \"Hey there, flutter_boilerplate is published!\\nHave a tea to celebrate, here is link <https://example.com|View request>"
+        #          payload: "{\"text\": \"Hey there, flutter_boilerplate ${{ env.BuildVersion }}(${{ env.BuildNumber }}) is published!\\nHave a tea to celebrate, here is link <https://example.com|View request>"
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_URL }}
           SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
@@ -116,7 +118,7 @@ jobs:
         if: failure()
         uses: slackapi/slack-github-action@v1.18.0
         with:
-          payload: "{\"text\": \"hey there, flutter_boilerplate ${{ env.BuildNumber }} is fail to publish!\\nAuthor: ${{github.actor}}\"}"
+          payload: "{\"text\": \"Hey there, flutter_boilerplate ${{ env.BuildVersion }}(${{ env.BuildNumber }}) is fail to publish!\\nTake a coffee and do some fix\"}"
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_URL }}
           SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
