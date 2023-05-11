@@ -22,7 +22,9 @@ jobs:
         id: slack
         uses: slackapi/slack-github-action@v1.18.0
         with:
-          payload: "{\"text\": \"flutter_boilerplate ispublished!\n Author: ${{github.actor}}\"}"
+          #          payload: "{\"text\": \"posting from a github action\"}"
+
+          payload: "{\"text\": \"flutter_boilerplate ispublished! Author: ${{github.actor}}\"}"
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_URL }}
           SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
