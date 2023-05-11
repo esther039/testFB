@@ -16,16 +16,16 @@ jobs:
     permissions: write-all
     runs-on: macOS-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      - name: Setup Flutter
-        uses: subosito/flutter-action@v1
-        with:
-          flutter-version: '2.8.1'
-      - name: Update Flutter
-        run: flutter upgrade
-      - name: Install Dependencies
-        run: flutter pub get
+#      - name: Checkout
+#        uses: actions/checkout@v2
+#      - name: Setup Flutter
+#        uses: subosito/flutter-action@v1
+#        with:
+#          flutter-version: '2.8.1'
+#      - name: Update Flutter
+#        run: flutter upgrade
+#      - name: Install Dependencies
+#        run: flutter pub get
 #      - if: github.event.inputs.environment == 'prod'
 #        name: Install the Apple certificate and provisioning profile for prod
 #        env:
@@ -89,12 +89,12 @@ jobs:
 #          pip3 install codemagic-cli-tools
 #          xcode-project use-profiles
 #          pod cache clean --all
-      - name: Set current date as env variable
-        run: echo "BuildNumber=$(date +'%Y.%m.%d.%H.%M')" >> $GITHUB_ENV
-      - name: update build number
-        run: |
-          cd ios
-          agvtool new-version -all ${{ env.BuildNumber }}
+#      - name: Set current date as env variable
+#        run: echo "BuildNumber=$(date +'%Y.%m.%d.%H.%M')" >> $GITHUB_ENV
+#      - name: update build number
+#        run: |
+#          cd ios
+#          agvtool new-version -all ${{ env.BuildNumber }}
 #      - if: github.event.inputs.environment == 'prod'
 #        name: Building ipa for prod
 #        run: |
@@ -163,16 +163,40 @@ jobs:
 #                 }
 #              }
 #            ]
-      - name: Send custom JSON data to Slack workflow
-        id: slack
-        uses: slackapi/slack-github-action@v1.23.0
-        with:
-          payload: |
-            {
-              "text": "GitHub Action build result: success"
+  - name: Send custom JSON data to Slack workflow
+    id: slack
+    uses: slackapi/slack-github-action@v1.18.0
+    with:
+      # For posting a rich message using Block Kit
+      payload: |
+      {
+        "blocks": [
+          {
+            "type": "section",
+            "text": {
+              "type": "mrkdwn",
+              "text": "bar"
             }
-        env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_URL }}
+          }
+        ],
+        "attachments": [
+          {
+            "color": "#FF0000",
+            "blocks": [
+              {
+                "type": "section",
+                "text": {
+                  "type": "mrkdwn",
+                  "text": "foo"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    env:
+      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_URL }}
+      SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
 #      - name: Increase Build Number
 #        run: agvtool next-version -all
 #      - name: Clean up keychain and provisioning profile
