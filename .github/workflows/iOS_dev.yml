@@ -16,6 +16,15 @@ jobs:
     permissions: write-all
     runs-on: macOS-latest
     steps:
+      - name: Get current date
+        id: date
+        run: echo "::set-output name=date::$(date +'%Y.%m.%d.%H.%M')"
+      - name: Test with environment variables
+        run: echo ${{ steps.date.outputs.date }}
+      - name: Set current date as env variable
+        run: echo "NOW=$(date +'%Y.%m.%d.%H.%M.%S')" >> $GITHUB_ENV
+      - name: Echo current date
+        run: echo $NOW
 #      - name: Checkout
 #        uses: actions/checkout@v2
 #      - name: Setup Flutter
@@ -126,26 +135,26 @@ jobs:
 #          API_KEY: N2448JQDT8
 #          API_ISSUER: 58af71e1-9a4a-45af-a1ba-1544ed193087
 #        run: xcrun altool --output-format xml --upload-app -f build/ios/ipa/flutter_boilerplate_app.ipa -t ios --apiKey $API_KEY --apiIssuer $API_ISSUER
-      - name: Post to a Slack channel
-        id: slack
-        uses: slackapi/slack-github-action@v1.23.0
-        with:
-          channel-id: U01R7APFZC7
-          payload: |
-            {
-              "text": "GitHub Action build result: ${{ job.status }}",
-              "blocks": [
-                {
-                  "type": "section",
-                  "text": {
-                    "type": "mrkdwn",
-                    "text": "GitHub Action build result: ${{ job.status }}"
-                  }
-                }
-              ]
-            }
-        env:
-          SLACK_BOT_TOKEN: xoxb-2152829379-5239090487446-vSSJixy3TLoXyc8Mbfl0wT6w
+#      - name: Post to a Slack channel
+#        id: slack
+#        uses: slackapi/slack-github-action@v1.23.0
+#        with:
+#          channel-id: U01R7APFZC7
+#          payload: |
+#            {
+#              "text": "GitHub Action build result: ${{ job.status }}",
+#              "blocks": [
+#                {
+#                  "type": "section",
+#                  "text": {
+#                    "type": "mrkdwn",
+#                    "text": "GitHub Action build result: ${{ job.status }}"
+#                  }
+#                }
+#              ]
+#            }
+#        env:
+#          SLACK_BOT_TOKEN: xoxb-2152829379-5239090487446-vSSJixy3TLoXyc8Mbfl0wT6w
 #                    ,
 #              {
 #                 "type": "section",
