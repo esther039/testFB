@@ -16,33 +16,18 @@ jobs:
     permissions: write-all
     runs-on: macOS-latest
     steps:
-#      - name: Get current date
-#        id: date
-#        run: echo "::set-output name=date::$(date +'%Y.%m.%d.%H.%M')"
-#      - name: Test with environment variables
-#        run: echo ${{ steps.date.outputs.date }}
-      - name: Set current date as env variable
-        run: echo "BuildNumber=$(date +'%Y.%m.%d.%H.%M')" >> $GITHUB_ENV
-      - name: Echo current date
-        run: echo ${{ env.BuildNumber }}
 #      - name: Checkout
 #        uses: actions/checkout@v2
 #      - name: Setup Flutter
 #        uses: subosito/flutter-action@v1
 #        with:
 #          flutter-version: '2.8.1'
-#      - name: Generate build number
-#        uses: onyxmueller/build-tag-number@v1
-#        with:
-#          token: ${{secrets.github_token}}
-#      - name: Print new build number
-#        id: getBuildNumber
-#        run: echo "Build number is $BUILD_NUMBER"
+      - name: Set current date as env variable
+        run: echo "BuildNumber=$(date +'%Y.%m.%d.%H.%M')" >> $GITHUB_ENV
 #      - name: Update Flutter
 #        run: flutter upgrade
 #      - name: Install Dependencies
 #        run: flutter pub get
-#
 #      - if: github.event.inputs.environment == 'prod'
 #        name: Install the Apple certificate and provisioning profile for prod
 #        env:
@@ -106,10 +91,10 @@ jobs:
 #          pip3 install codemagic-cli-tools
 #          xcode-project use-profiles
 #          pod cache clean --all
-#      - name: update build number
-#        run: |
-#          cd ios
-#          agvtool new-version -all $BUILD_NUMBER
+      - name: update build number
+        run: |
+          cd ios
+          agvtool new-version -all $BUILD_NUMBER
 #      - if: github.event.inputs.environment == 'prod'
 #        name: Building ipa for prod
 #        run: |
