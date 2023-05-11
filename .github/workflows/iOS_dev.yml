@@ -16,15 +16,15 @@ jobs:
     permissions: write-all
     runs-on: macOS-latest
     steps:
-      - name: Get current date
-        id: date
-        run: echo "::set-output name=date::$(date +'%Y.%m.%d.%H.%M')"
-      - name: Test with environment variables
-        run: echo ${{ steps.date.outputs.date }}
+#      - name: Get current date
+#        id: date
+#        run: echo "::set-output name=date::$(date +'%Y.%m.%d.%H.%M')"
+#      - name: Test with environment variables
+#        run: echo ${{ steps.date.outputs.date }}
       - name: Set current date as env variable
-        run: echo "NOW=$(date +'%Y.%m.%d.%H.%M.%S')" >> $GITHUB_ENV
+        run: echo "BuildNumber=$(date +'%Y.%m.%d.%H.%M')" >> $GITHUB_ENV
       - name: Echo current date
-        run: echo $NOW
+        run: echo ${{ env.BuildNumber }}
 #      - name: Checkout
 #        uses: actions/checkout@v2
 #      - name: Setup Flutter
