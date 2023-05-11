@@ -94,52 +94,53 @@ jobs:
       - name: update build number
         run: |
           cd ios
-          agvtool new-version -all $BUILD_NUMBER
-      - if: github.event.inputs.environment == 'prod'
-        name: Building ipa for prod
-        run: |
-          flutter build ios-framework
-          xcode-project build-ipa --workspace ios/Runner.xcworkspace --scheme Runner --config Release
-      - if: github.event.inputs.environment == 'dev'
-        name: Building ipa for dev
-        run: |
-          flutter build ios --flavor dev -t lib/main_dev.dart
-          xcodebuild -workspace ios/Runner.xcworkspace -scheme dev -sdk iphoneos -configuration Release archive -archivePath build/ios/xcarchive/Runner_dev.xcarchive
-          xcodebuild -exportArchive -archivePath build/ios/xcarchive/Runner_dev.xcarchive -exportPath build/ios/ipa -exportOptionsPlist /Users/runner/export_options.plist COMPILER_INDEX_STORE_ENABLE=NO
+      - name: Set build number
+        run: agvtool new-version -all 2023.1.5.2
+#      - if: github.event.inputs.environment == 'prod'
+#        name: Building ipa for prod
+#        run: |
+#          flutter build ios-framework
+#          xcode-project build-ipa --workspace ios/Runner.xcworkspace --scheme Runner --config Release
+#      - if: github.event.inputs.environment == 'dev'
+#        name: Building ipa for dev
+#        run: |
+#          flutter build ios --flavor dev -t lib/main_dev.dart
+#          xcodebuild -workspace ios/Runner.xcworkspace -scheme dev -sdk iphoneos -configuration Release archive -archivePath build/ios/xcarchive/Runner_dev.xcarchive
+#          xcodebuild -exportArchive -archivePath build/ios/xcarchive/Runner_dev.xcarchive -exportPath build/ios/ipa -exportOptionsPlist /Users/runner/export_options.plist COMPILER_INDEX_STORE_ENABLE=NO
 ##      - name: Update iOS ipa to Pgyer
 ##        run: curl -F "file=@build/ios/ipa/flutter_boilerplate_app.ipa" -F "uKey=77795d4fbdcc66711f199b1d4d87d50e" -F "_api_key=79fdd1bffed67da4ade389c32f866eba" https://upload.pgyer.com/apiv1/app/upload
-      - name: Install private API key P8
-        env:
-          PRIVATE_API_KEY_BASE64: LS0tLS1CRUdJTiBQUklWQVRFIEtFWS0tLS0tCk1JR1RBZ0VBTUJNR0J5cUdTTTQ5QWdFR0NDcUdTTTQ5QXdFSEJIa3dkd0lCQVFRZ0p2K1kyVHJ6RGU3Y0hnOW4KQ0xTYXI5T2ZYS0Z3Tng1UlFDOTg0UzZSTlk2Z0NnWUlLb1pJemowREFRZWhSQU5DQUFTSUJ6Y0VKcmdHRWQ5SwpQNm1aVFRiR3NaR1pIeUNFNUROT3RKMThvREVnYlpwaldJWU5xY1d1SFVERXRPbFpUY3N1YzF5eTgxNE5iUnEzClVZT3RxUDF6Ci0tLS0tRU5EIFBSSVZBVEUgS0VZLS0tLS0=
-          API_KEY: N2448JQDT8
-        run: |
-          mkdir -p ~/private_keys
-          echo -n "$PRIVATE_API_KEY_BASE64" | base64 --decode --output ~/private_keys/AuthKey_$API_KEY.p8
-      - name: Upload app to TestFlight
-        env:
-          API_KEY: N2448JQDT8
-          API_ISSUER: 58af71e1-9a4a-45af-a1ba-1544ed193087
-        run: xcrun altool --output-format xml --upload-app -f build/ios/ipa/flutter_boilerplate_app.ipa -t ios --apiKey $API_KEY --apiIssuer $API_ISSUER
-#      - name: Post to a Slack channel
-#        id: slack
-#        uses: slackapi/slack-github-action@v1.23.0
-#        with:
-#          channel-id: U01R7APFZC7
-#          payload: |
-#            {
-#              "text": "GitHub Action build result: ${{ job.status }}",
-#              "blocks": [
-#                {
-#                  "type": "section",
-#                  "text": {
-#                    "type": "mrkdwn",
-#                    "text": "GitHub Action build result: ${{ job.status }}"
-#                  }
-#                }
-#              ]
-#            }
+#      - name: Install private API key P8
 #        env:
-#          SLACK_BOT_TOKEN: xoxb-2152829379-5239090487446-vSSJixy3TLoXyc8Mbfl0wT6w
+#          PRIVATE_API_KEY_BASE64: LS0tLS1CRUdJTiBQUklWQVRFIEtFWS0tLS0tCk1JR1RBZ0VBTUJNR0J5cUdTTTQ5QWdFR0NDcUdTTTQ5QXdFSEJIa3dkd0lCQVFRZ0p2K1kyVHJ6RGU3Y0hnOW4KQ0xTYXI5T2ZYS0Z3Tng1UlFDOTg0UzZSTlk2Z0NnWUlLb1pJemowREFRZWhSQU5DQUFTSUJ6Y0VKcmdHRWQ5SwpQNm1aVFRiR3NaR1pIeUNFNUROT3RKMThvREVnYlpwaldJWU5xY1d1SFVERXRPbFpUY3N1YzF5eTgxNE5iUnEzClVZT3RxUDF6Ci0tLS0tRU5EIFBSSVZBVEUgS0VZLS0tLS0=
+#          API_KEY: N2448JQDT8
+#        run: |
+#          mkdir -p ~/private_keys
+#          echo -n "$PRIVATE_API_KEY_BASE64" | base64 --decode --output ~/private_keys/AuthKey_$API_KEY.p8
+#      - name: Upload app to TestFlight
+#        env:
+#          API_KEY: N2448JQDT8
+#          API_ISSUER: 58af71e1-9a4a-45af-a1ba-1544ed193087
+#        run: xcrun altool --output-format xml --upload-app -f build/ios/ipa/flutter_boilerplate_app.ipa -t ios --apiKey $API_KEY --apiIssuer $API_ISSUER
+      - name: Post to a Slack channel
+        id: slack
+        uses: slackapi/slack-github-action@v1.23.0
+        with:
+          channel-id: U01R7APFZC7
+          payload: |
+            {
+              "text": "GitHub Action build result: ${{ job.status }}",
+              "blocks": [
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": "GitHub Action build result: ${{ job.status }}"
+                  }
+                }
+              ]
+            }
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_TOKEN }}
 #                    ,
 #              {
 #                 "type": "section",
@@ -163,8 +164,8 @@ jobs:
 #                 }
 #              }
 #            ]
-      - name: Increase Build Number
-        run: agvtool next-version -all
+#      - name: Increase Build Number
+#        run: agvtool next-version -all
 #      - name: Clean up keychain and provisioning profile
 #        if: ${{ always() }}
 #        run: |
