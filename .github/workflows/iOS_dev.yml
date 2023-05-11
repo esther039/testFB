@@ -101,7 +101,7 @@ jobs:
         id: get_version
         run: agvtool what-marketing-version
       - name: Show version
-        run: echo "BuildVersion=${{step.get_verion.outputs}}" >> $GITHUB_ENV
+        run: echo "BuildVersion=${{steps.get_verion.outputs}}" >> $GITHUB_ENV
       - name: Send custom JSON data to Slack workflow
         if: success()
         uses: slackapi/slack-github-action@v1.18.0
