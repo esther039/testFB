@@ -22,8 +22,6 @@ jobs:
         uses: subosito/flutter-action@v1
         with:
           flutter-version: '2.8.1'
-      - name: Set current date as env variable
-        run: echo "BuildNumber=$(date +'%Y.%m.%d.%H.%M')" >> $GITHUB_ENV
       - name: Update Flutter
         run: flutter upgrade
       - name: Install Dependencies
@@ -91,10 +89,11 @@ jobs:
 #          pip3 install codemagic-cli-tools
 #          xcode-project use-profiles
 #          pod cache clean --all
+      - name: Set current date as env variable
+        run: echo "BuildNumber=$(date +'%Y.%m.%d.%H.%M')" >> $GITHUB_ENV
       - name: update build number
         run: |
           cd ios
-          echo ${{ env.BuildNumber }}
           agvtool new-version -all ${{ env.BuildNumber }}
 #      - if: github.event.inputs.environment == 'prod'
 #        name: Building ipa for prod
@@ -121,26 +120,26 @@ jobs:
 #          API_KEY: N2448JQDT8
 #          API_ISSUER: 58af71e1-9a4a-45af-a1ba-1544ed193087
 #        run: xcrun altool --output-format xml --upload-app -f build/ios/ipa/flutter_boilerplate_app.ipa -t ios --apiKey $API_KEY --apiIssuer $API_ISSUER
-      - name: Post to a Slack channel
-        id: slack
-        uses: slackapi/slack-github-action@v1.23.0
-        with:
-          channel-id: U01R7APFZC7
-          payload: |
-            {
-              "text": "GitHub Action build result: ${{ job.status }}",
-              "blocks": [
-                {
-                  "type": "section",
-                  "text": {
-                    "type": "mrkdwn",
-                    "text": "GitHub Action build result: ${{ job.status }}"
-                  }
-                }
-              ]
-            }
-        env:
-          SLACK_BOT_TOKEN: ${{ secrets.SLACK_TOKEN }}
+#      - name: Post to a Slack channel
+#        id: slack
+#        uses: slackapi/slack-github-action@v1.23.0
+#        with:
+#          channel-id: U01R7APFZC7
+#          payload: |
+#            {
+#              "text": "GitHub Action build result: ${{ job.status }}",
+#              "blocks": [
+#                {
+#                  "type": "section",
+#                  "text": {
+#                    "type": "mrkdwn",
+#                    "text": "GitHub Action build result: ${{ job.status }}"
+#                  }
+#                }
+#              ]
+#            }
+#        env:
+#          SLACK_BOT_TOKEN: ${{ secrets.SLACK_TOKEN }}
 #                    ,
 #              {
 #                 "type": "section",
@@ -164,6 +163,16 @@ jobs:
 #                 }
 #              }
 #            ]
+      - name: Send custom JSON data to Slack workflow
+        id: slack
+        uses: slackapi/slack-github-action@v1.23.0
+        with:
+          payload: |
+            {
+              "text": "GitHub Action build result: success"
+            }
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_URL }}
 #      - name: Increase Build Number
 #        run: agvtool next-version -all
 #      - name: Clean up keychain and provisioning profile
