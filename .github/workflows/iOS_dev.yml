@@ -108,8 +108,8 @@ jobs:
         if: success()
         uses: slackapi/slack-github-action@v1.18.0
         with:
-          payload: "{\"text\": \"Hey there, flutter_boilerplate is published!\\nHave a tea to celebrate, here is [link](#{@https://google.com})\"}"
-        #          payload: "{\"text\": \"Hey there, flutter_boilerplate ${{ env.BuildVersion }}(${{ env.BuildNumber }}) is published!\\nHave a tea to celebrate, here is link <https://example.com|View request>"\"}"
+          payload: "{\"text\": \"Hey there, flutter_boilerplate is published!\\nHave a tea to celebrate, here is link <https://google.com|View request>\"}"
+        #          payload: "{\"text\": \"Hey there, flutter_boilerplate ${{ env.BuildVersion }}(${{ env.BuildNumber }}) is published!\\nHave a tea to celebrate, here is link <https://example.com|View request>\"}"
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_URL }}
           SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
