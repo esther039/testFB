@@ -22,11 +22,11 @@ jobs:
         id: slack
         uses: slackapi/slack-github-action@v1.18.0
         with:
-          payload: "{\"text\": \"posting from a github action\"}"
+#          payload: "{\"text\": \"posting from a github action\"}"
+          slack-message: 'posting from a github action!'
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_URL }}
           SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
-          SLACK_TEXT: 'The build is complete.'
 
 #      - name: Checkout
 #        uses: actions/checkout@v2
