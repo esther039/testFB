@@ -130,7 +130,7 @@ jobs:
         if: success()
         uses: tokorom/action-slack-incoming-webhook@main
         env:
-          INCOMING_WEBHOOK_URL: https://hooks.slack.com/services/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
+          INCOMING_WEBHOOK_URL: https://hooks.slack.com/services/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
         with:
           text: A release is published.
           blocks: |
