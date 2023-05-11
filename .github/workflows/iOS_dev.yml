@@ -19,37 +19,11 @@ jobs:
       - name: Send custom JSON data to Slack workflow
         id: slack
         uses: slackapi/slack-github-action@v1.18.0
-        with:
-          # For posting a rich message using Block Kit
-          payload: |
-          {
-            "blocks": [
-              {
-                "type": "section",
-                "text": {
-                  "type": "mrkdwn",
-                  "text": "bar"
-                }
-              }
-            ],
-            "attachments": [
-              {
-                "color": "#FF0000",
-                "blocks": [
-                  {
-                    "type": "section",
-                    "text": {
-                      "type": "mrkdwn",
-                      "text": "foo"
-                    }
-                  }
-                ]
-              }
-            ]
-          }
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_URL }}
           SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
+          SLACK_TEXT: 'The build is complete.'
+
 #      - name: Checkout
 #        uses: actions/checkout@v2
 #      - name: Setup Flutter
