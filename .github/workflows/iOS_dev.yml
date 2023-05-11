@@ -97,13 +97,11 @@ jobs:
         run: |
           cd ios
           agvtool new-version -all ${{ env.BuildNumber }}
-#      - name: Get version
-#        id: get_version
-#        run: |
-#          cd ios
-#          agvtool what-marketing-version
-#      - name: Show version
-#        run: echo "BuildVersion=${{steps.get_verion.outputs}}" >> $GITHUB_ENV
+      - name: Get version
+        id: get_version
+        run: sed -n '6p' pubspec.yaml | cut -d "+" -f1 | cut -d ":" -f2
+      - name: Show version
+        run: echo "BuildVersion=${{steps.get_verion.outputs}}" >> $GITHUB_ENV
       - name: Send custom JSON data to Slack workflow
         if: success()
         uses: slackapi/slack-github-action@v1.18.0
@@ -119,7 +117,7 @@ jobs:
         with:
           payload: "{\"text\": \"Hey there, flutter_boilerplate ${{ env.BuildVersion }}(${{ env.BuildNumber }}) is fail to publish!\\nTake a coffee and do some fix\"}"
         env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_URL }}
+          SLACK_WEBHOOK_URL: aHR0cHM6Ly9ob29rcy5zbGFjay5jb20vc2VydmljZXMvVDAyNEdRREI1L0IwNTdTNjFINzRZL1hKa3gwMkhnSjV4M2hOb0IzWVJXTU9xcg==
           SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
 #      - if: github.event.inputs.environment == 'prod'
 #        name: Building ipa for prod
