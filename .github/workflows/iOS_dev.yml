@@ -99,7 +99,10 @@ jobs:
 #          agvtool new-version -all ${{ env.BuildNumber }}
       - name: Get version
         id: get_version
-        run: sed -n '6p' pubspec.yaml | cut -d "+" -f1 | cut -d ":" -f2
+        run: |
+          cd ios/flutter
+          cat Generated.xcconfig
+          grep FLUTTER_BUILD_NAME Generated.xcconfig | cut -d'=' -f2
 #      - name: Show version
 #        run: echo "BuildVersion=${{steps.get_verion.outputs}}" >> $GITHUB_ENV
       - name: Send custom JSON data to Slack workflow
