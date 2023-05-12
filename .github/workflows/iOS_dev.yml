@@ -104,13 +104,11 @@ jobs:
           echo "BuildVersion=$(grep FLUTTER_BUILD_NAME Generated.xcconfig | cut -d'=' -f2)" >> $GITHUB_ENV
       - if: github.event.inputs.environment == 'prod'
         name: Building ipa for prod
-        id: upload_ipa
         run: |
           flutter build ios-framework
           xcode-project build-ipa --workspace ios/Runner.xcworkspace --scheme Runner --config Release
       - if: github.event.inputs.environment == 'dev'
         name: Building ipa for dev
-        id: upload_ipa
         run: |
           flutter build ios --flavor dev -t lib/main_dev.dart
           xcodebuild -workspace ios/Runner.xcworkspace -scheme dev -sdk iphoneos -configuration Release archive -archivePath build/ios/xcarchive/Runner_dev.xcarchive
@@ -123,6 +121,7 @@ jobs:
           mkdir -p ~/private_keys
           echo -n "$PRIVATE_API_KEY_BASE64" | base64 --decode --output ~/private_keys/AuthKey_$API_KEY.p8
       - name: Upload app to TestFlight
+        id: upload_ipa
         env:
           API_KEY: N2448JQDT8
           API_ISSUER: 58af71e1-9a4a-45af-a1ba-1544ed193087
