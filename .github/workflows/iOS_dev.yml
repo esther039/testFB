@@ -141,7 +141,7 @@ jobs:
         env:
           API_KEY: N2448JQDT8
           API_ISSUER: 58af71e1-9a4a-45af-a1ba-1544ed193087
-        run: echo “ErrorMessage=$(xcrun altool --output-format json --upload-app -f build/ios/ipa/flutter_boilerplate_app.ipa -t ios --apiKey $API_KEY --apiIssuer $API_ISSUER | sed -e 's/-//g' | jq '.producterrors[0].message')" >> $GITHUB_ENV
+        run: echo "ErrorMessage=$(xcrun altool --output-format json --upload-app -f build/ios/ipa/flutter_boilerplate_app.ipa -t ios --apiKey $API_KEY --apiIssuer $API_ISSUER | sed -e 's/-//g' | jq '.producterrors[0].message')" >> $GITHUB_ENV
       - name: Send custom JSON data to Slack workflow
         if: ${{ failure() && steps.upload_ipa.conclusion == 'failure' && env.ErrorMessage != '' }}
         uses: slackapi/slack-github-action@v1.18.0
