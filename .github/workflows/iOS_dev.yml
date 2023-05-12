@@ -145,13 +145,12 @@ jobs:
       - name: Send custom JSON data to Slack workflow
 #        if: ${{ failure() && steps.upload_ipa.conclusion == 'failure' && env.ErrorMessage != '' }}
         uses: slackapi/slack-github-action@v1.18.0
-        env:
-          ErrorMessage: test
         with:
           payload: "{\"text\": \"Hey there, APP flutter_boilerplate is fail to publish.\\nHere is error message: ${{ env.ErrorMessage }}\"}"
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_BOT_URL }}
           SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
+          ErrorMessage: test
 #      - name: Clean up keychain and provisioning profile
 #        if: ${{ always() }}
 #        run: |
