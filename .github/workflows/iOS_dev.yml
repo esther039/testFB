@@ -100,6 +100,7 @@ jobs:
       - name: Get version
         id: get_version
         run: |
+          cd ios/Flutter
           cat Generated.xcconfig
           echo "BuildVersion=$(grep FLUTTER_BUILD_NAME Generated.xcconfig | cut -d'=' -f2)" >> $GITHUB_ENV
       - if: github.event.inputs.environment == 'prod'
