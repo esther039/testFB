@@ -96,11 +96,10 @@ jobs:
 #      - name: update build number
 #        run: |
 #          cd ios
-#          agvtool new-version -all ${{ env.BuildNumber }}
+
       - name: Get version
         id: get_version
         run: |
-#          cd ios/Flutter
           cat Generated.xcconfig
           echo "BuildVersion=$(grep FLUTTER_BUILD_NAME Generated.xcconfig | cut -d'=' -f2)" >> $GITHUB_ENV
       - name: Send custom JSON data to Slack workflow
