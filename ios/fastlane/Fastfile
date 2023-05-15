@@ -29,19 +29,24 @@ api_key = app_store_connect_api_key(
    in_house: false # detecting this via ASC private key not currently supported
  )
 
+ keychain_name = ENV['TEMP_KEYCHAIN_USER']
+ keychain_password = ENV["TEMP_KEYCHAIN_PASSWORD"]
+
 def delete_temp_keychain(name)
   delete_keychain(
     name: name
   ) if File.exist? File.expand_path("~/Library/Keychains/#{name}-db")
 end
+
 def create_temp_keychain(name, password)
   create_keychain(
     name: name,
     password: password,
     unlock: false,
-    timeout: false
+    timeout: 0
   )
 end
+
 def ensure_temp_keychain(name, password)
   delete_temp_keychain(name)
   create_temp_keychain(name, password)
@@ -49,7 +54,15 @@ end
 
 platform :ios do
   lane :release_prod do
-    match(type: "appstore", readonly: true)
+    create_keychain(
+              name: keychain_name,
+              password: keychain_password,
+              default_keychain: true,
+              unlock: true,
+              timeout: 3600,
+              lock_when_sleeps: false
+            )
+    match(type: "appstore", readonly: true, keychain_name: keychain_name, keychain_password: keychain_password )
     increment_build_number(
      build_number: Time.now.strftime("%Y.%m.%d.%H.%M")
     )
@@ -60,5 +73,6 @@ platform :ios do
     # # set_changelog
     # upload_to_testflight(api_key: api_key)
     # # refresh_dsyms
+    delete_temp_keychain(keychain_name)
   end
 end
