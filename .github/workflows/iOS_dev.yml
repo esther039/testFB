@@ -40,21 +40,21 @@ jobs:
         name: fastlane for dev
         run: |
           cd ./ios && bundle exec fastlane release_dev
-      - name: Set current date as env variable
-        run: echo "BuildNumber=$(date +'%Y.%m.%d.%H.%M')" >> $GITHUB_ENV
-      - name: Get version
-        id: get_version
-        run: |
-          cd ios/Flutter
-          cat Generated.xcconfig
-          echo "BuildVersion=$(grep FLUTTER_BUILD_NAME Generated.xcconfig | cut -d'=' -f2)" >> $GITHUB_ENV
-    
+#      - name: Set current date as env variable
+#        run: echo "BuildNumber=$(date +'%Y.%m.%d.%H.%M')" >> $GITHUB_ENV
+#      - name: Get version
+#        id: get_version
+#        run: |
+#          cd ios/Flutter
+#          cat Generated.xcconfig
+#          echo "BuildVersion=$(grep FLUTTER_BUILD_NAME Generated.xcconfig | cut -d'=' -f2)" >> $GITHUB_ENV
+#
 
-       - name: Send custom JSON data to Slack workflow
-        if: success()
-        uses: slackapi/slack-github-action@v1.18.0
-        with:
-          payload: "{\"text\": \"Hey there, APP flutter_boilerplate ${{ env.BuildVersion }} ${{ env.BuildNumber }} is published!\\nHave a tea to celebrate, here is link <https://www.pgyer.com/EEHy|View package>\"}"
+#      - name: Send custom JSON data to Slack workflow
+#        if: success()
+#        uses: slackapi/slack-github-action@v1.18.0
+#        with:
+#          payload: "{\"text\": \"Hey there, APP flutter_boilerplate ${{ env.BuildVersion }} ${{ env.BuildNumber }} is published!\\nHave a tea to celebrate, here is link <https://www.pgyer.com/EEHy|View package>\"}"
 #      - name: Get Error Messages
 #        if: ${{ failure() && steps.upload_ipa.conclusion == 'failure' }}
 #        run: echo "ErrorMessage=$(xcrun altool --output-format json --upload-app -f build/ios/ipa/flutter_boilerplate_app.ipa -t ios --apiKey $API_KEY --apiIssuer $API_ISSUER | sed -e 's/-//g' | jq '.producterrors[0].message')" >> $GITHUB_ENV
