@@ -18,33 +18,33 @@ jobs:
     permissions: write-all
     runs-on: macOS-latest
     steps:
-#      - name: Checkout
-#        uses: actions/checkout@v2
-#      - name: Setup Flutter
-#        uses: subosito/flutter-action@v1
-#        with:
-#          flutter-version: '2.8.1'
-#      - name: Update Flutter
-#        run: flutter upgrade
-#      - name: Bundle install
-#        run: cd ./ios && bundle install
-#      - name: Install tools
-#        run: |
-#          flutter pub get
-#          cd ./ios && pod install
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v1
+        with:
+          flutter-version: '2.8.1'
+      - name: Update Flutter
+        run: flutter upgrade
+      - name: Bundle install
+        run: cd ./ios && bundle install
+      - name: Install tools
+        run: |
+          flutter pub get
+          cd ./ios && pod install
       - name: Install SSH key
         uses: shimataro/ssh-key-action@v2
         with:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           known_hosts: github.com
-#      - if: github.event.inputs.environment == 'prod'
-#        name: fastlane for prod
-#        run: |
-#          cd ./ios && bundle exec fastlane release_prod
-#      - if: github.event.inputs.environment == 'dev'
-#        name: fastlane for dev
-#        run: |
-#          cd ./ios && bundle exec fastlane release_dev
+      - if: github.event.inputs.environment == 'prod'
+        name: fastlane for prod
+        run: |
+          cd ./ios && bundle exec fastlane release_prod
+      - if: github.event.inputs.environment == 'dev'
+        name: fastlane for dev
+        run: |
+          cd ./ios && bundle exec fastlane release_dev
 #      - name: Set current date as env variable
 #        run: echo "BuildNumber=$(date +'%Y.%m.%d.%H.%M')" >> $GITHUB_ENV
 #      - name: Get version
