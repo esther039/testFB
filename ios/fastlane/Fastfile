@@ -1,0 +1,68 @@
+# This file contains the fastlane.tools configuration
+# You can find the documentation at https://docs.fastlane.tools
+#
+# For a list of all available actions, check out
+#
+#     https://docs.fastlane.tools/actions
+#
+# For a list of all available plugins, check out
+#
+#     https://docs.fastlane.tools/plugins/available-plugins
+#
+
+# Uncomment the line if you want fastlane to automatically update itself
+# update_fastlane
+
+fastlane_require 'dotenv'
+
+before_all do
+  Dotenv.overload '.env'
+end
+
+default_platform(:ios)
+
+api_key = app_store_connect_api_key(
+   key_id: ENV["ASC_KEY_ID"],
+   issuer_id: ENV["ASC_ISSUER_ID"],
+   key_content: ENV["ASC_KEY"],
+   is_key_content_base64: true,
+   in_house: false # detecting this via ASC private key not currently supported
+ )
+
+def delete_temp_keychain(name)
+  delete_keychain(
+    name: name
+  ) if File.exist? File.expand_path("~/Library/Keychains/#{name}-db")
+end
+def create_temp_keychain(name, password)
+  create_keychain(
+    name: name,
+    password: password,
+    unlock: false,
+    timeout: false
+  )
+end
+def ensure_temp_keychain(name, password)
+  delete_temp_keychain(name)
+  create_temp_keychain(name, password)
+end
+
+platform :ios do
+  lane :release_prod do
+    match(type: "appstore", readonly: true)
+    increment_build_number(
+     build_number: Time.now.strftime("%Y.%m.%d.%H.%M")
+    )
+    gym(
+      scheme: "Runner",
+      export_method: "app-store",
+      clean: true,
+      include_symbols: true,
+      include_bitcode: true
+    )    
+    changelog_from_git_commits
+    # # set_changelog
+    # upload_to_testflight(api_key: api_key)
+    # # refresh_dsyms
+  end
+end
