@@ -55,10 +55,10 @@ end
 platform :ios do
   lane :release do
     begin
-#       preset_key
-#       setup_number
-      puts "#{identifier}"
-#       build_prod
+      preset_key
+      setup_number
+      puts "99999#{identifier}"
+      build_prod
 #       upload
 #       slack_message
 #       delete_temp_keychain(keychain_name)
@@ -70,11 +70,16 @@ platform :ios do
   lane :release_dev do
     begin
       preset_key
-      update_app_identifier(
-         xcodeproj: "Runner.xcodeproj",
-         plist_path: "Runner/Info.plist",
-         app_identifier: "com.example.flutterBoilerplateApp.dev"
-      )
+            update_app_identifier(
+               xcodeproj: "Runner.xcodeproj",
+               plist_path: "Runner/Info.plist",
+               app_identifier: "com.example.flutterBoilerplateApp.dev"
+            )
+update_code_signing_settings(
+    use_automatic_signing: false,
+    path: "Runner.xcodeproj",
+    profile_name: 'flutterBoilerplateDev' # app_identifier could be an environment variable: ENV['APP_ID']
+)
       setup_number
       build_dev
 #       upload
