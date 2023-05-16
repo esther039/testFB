@@ -151,13 +151,20 @@ platform :ios do
       )
   end
 
-  lane :slack_message do
+  lane :slack do
     slack(
-          message: "New FlutterBoilerplate iOS App Version Announce!",
-          default_payloads: [:git_branch, :last_git_commit_message],
-          message: "iOS: build completed for v(#{Time.now.strftime("%Y.%m.%d.%H.%M")}). Now uploading to testflight.",
-          lack_url: "https://hooks.slack.com/services/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"
-         )
+        message: "New iOS Flutter App Version Announce!",
+        payload: {
+                'Build Number' => Time.now.strftime("%Y.%m.%d.%H.%M")
+              },
+        slack_url: "https://hooks.slack.com/services/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"
+      )
+#     slack(
+#           #message: "New FlutterBoilerplate iOS App Version Announce!",
+#           #default_payloads: [:git_branch, :last_git_commit_message],
+#           message: "iOS: build completed for v(#{Time.now.strftime("%Y.%m.%d.%H.%M")}). Now uploading to testflight.",
+#           slack_url: "https://hooks.slack.com/services/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"
+#          )
   end
 
   def on_error(exception)
