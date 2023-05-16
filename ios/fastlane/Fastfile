@@ -71,6 +71,11 @@ platform :ios do
       preset_key
       disable_automatic_code_signing
       setup_number
+      update_app_identifier(
+      xcodeproj: "./ios/Runner.xcodeproj",
+      plist_path: "Runner/Info.plist",
+      app_identifier: "com.example.flutterBoilerplateApp.dev"
+      )
       build_dev
 #       upload
 #       slack_message
@@ -134,7 +139,7 @@ platform :ios do
               export_options: {
                      method: "app-store",
                      provisioningProfiles: {
-                         "com.example.flutterBoilerplateApp" => "flutterBoilerplateDev"
+                         "com.example.flutterBoilerplateApp.dev" => "flutterBoilerplateDev"
                      }
               },
               output_name:"Runner.ipa",
@@ -148,7 +153,7 @@ platform :ios do
                 export_options: {
                        method: "app-store",
                        provisioningProfiles: {
-                           "com.example.flutterBoilerplateApp" => "flutterBoilerplateStg"
+                           "com.example.flutterBoilerplateApp.staging" => "flutterBoilerplateStg"
                        }
                 },
                 output_name:"Runner.ipa",
