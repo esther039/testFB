@@ -135,8 +135,7 @@ platform :ios do
                      method: "app-store",
                      provisioningProfiles: {
                          "com.example.flutterBoilerplateApp" => "flutterBoilerplateDev"
-                     },
-                     signingStyle: "manual"
+                     }
               },
               output_name:"Runner.ipa",
               skip_profile_detection: true
