@@ -2,7 +2,7 @@ name: iOS Package
 
 on:
   push:
-    branches: [ feature/testflight ]
+    branches: [ feature/create ]
   workflow_dispatch:
     inputs:
       environment:
@@ -30,7 +30,7 @@ jobs:
 #        run: cd ./ios && bundle install
       - name: Install tools
         run: |
-          cd ./ios
+          cd ios
       - if: github.event.inputs.environment == 'prod'
         name: fastlane for prod
         run: |
