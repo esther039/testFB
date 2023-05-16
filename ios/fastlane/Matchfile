@@ -6,7 +6,7 @@ type("appstore") # The default type, can be: appstore, adhoc, enterprise or deve
 
 app_identifier(["com.example.flutterBoilerplateAppForTest001"])
 
-ENV["MATCH_PASSWORD"] = "0"
+ENV["MATCH_PASSWORD"] = "1234"
 username("iphone@wiredcraft.com") # Your Apple Developer Portal username
 
 # For all available options run `fastlane match --help`
