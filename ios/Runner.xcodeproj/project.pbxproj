@@ -176,7 +176,7 @@
 						DevelopmentTeam = GZG2S47WHM;
 						DevelopmentTeamName = "Qiang Gu";
 						LastSwiftMigration = 1100;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
 					};
 				};
 			};
