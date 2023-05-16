@@ -72,14 +72,14 @@ platform :ios do
         build_number: Time.now.strftime("%Y.%m.%d.%H.%M")
       )
 
-      gym
-
-      upload_to_testflight(api_key: api_key)
+#       gym
+#
+#       upload_to_testflight(api_key: api_key)
 
       #slack_message
       # slack(
       #   message: "iOS: build completed for v(#{Time.now.strftime("%Y.%m.%d.%H.%M")}). Now uploading to testflight.",
-      #   slack_url: https://hooks.slack.com/services/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
+      #   slack_url: https://hooks.slack.com/services/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
       # )
     #delete_temp_keychain(keychain_name)
     rescue => ex
