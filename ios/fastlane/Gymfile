@@ -6,8 +6,22 @@
 
 # Remove the # in front of the line to enable the option
 
-# scheme("Example")
+scheme("Runner")
+
 
 # sdk("iphoneos9.0")
+export_options({
+   method: "app-store",
+   provisioningProfiles: { 
+     "com.example.flutterBoilerplateApp" => "flutterBoilerplate",
+        },
+   signingStyle: "manual"
+})
 
-output_directory("./")
+include_bitcode(false)
+include_symbols(false)
+output_directory("./fastlane/builds")
+
+export_team_id(CredentialsManager::AppfileConfig.try_fetch_value(:team_id))
+
+skip_profile_detection(true)

@@ -371,9 +371,10 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = "$(MARKETING_VERSION)";
-				PRODUCT_BUNDLE_IDENTIFIER = com.example.flutterBoilerplateAppForTest001;
+				PRODUCT_BUNDLE_IDENTIFIER = com.example.flutterBoilerplateApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = flutteradhoctest;
+				PROVISIONING_PROFILE_SPECIFIER = flutterBoilterplate;
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = flutterBoilterplate;
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -996,9 +997,10 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = "$(MARKETING_VERSION)";
-				PRODUCT_BUNDLE_IDENTIFIER = com.example.flutterBoilerplateAppForTest001;
+				PRODUCT_BUNDLE_IDENTIFIER = com.example.flutterBoilerplateApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = flutteradhoctest;
+				PROVISIONING_PROFILE_SPECIFIER = flutterBoilterplate;
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = flutterBoilterplate;
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -1025,9 +1027,10 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = "$(MARKETING_VERSION)";
-				PRODUCT_BUNDLE_IDENTIFIER = com.example.flutterBoilerplateAppForTest001;
+				PRODUCT_BUNDLE_IDENTIFIER = com.example.flutterBoilerplateApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = flutteradhoctest;
+				PROVISIONING_PROFILE_SPECIFIER = flutterBoilterplate;
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = flutterBoilterplate;
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";

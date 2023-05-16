@@ -1,10 +1,10 @@
-git_url("git@github.com:esther039/Matchfile.git")
+git_url("git@github.com:estherzhangyue/flutter-certificate.git")
 
 storage_mode("git")
 
-type("appstore") # The default type, can be: appstore, adhoc, enterprise or development
+type("development") # The default type, can be: appstore, adhoc, enterprise or development
 
-app_identifier(["com.example.flutterBoilerplateAppForTest001"])
+app_identifier(["com.example.flutterBoilerplateApp"])
 
 ENV["MATCH_PASSWORD"] = "1234"
 username("iphone@wiredcraft.com") # Your Apple Developer Portal username
