@@ -68,11 +68,17 @@ platform :ios do
             )
       match(git_basic_authorization:ENV["MATCH_GIT_BASIC_AUTHORIZATION"], type: "appstore", readonly: true, keychain_name: keychain_name, keychain_password: keychain_password )
 
-      increment_build_number(
-        build_number: Time.now.strftime("%Y.%m.%d.%H.%M")
-      )
+      setup_number
 
-       gym
+      build_app(scheme: "Runner",
+              export_options: {
+                     method: "app-store",
+                     provisioningProfiles: {
+                         "com.example.flutterBoilerplateApp" => "flutterBoilerplate"
+                     }
+              },
+              skip_profile_detection: true
+      )
 #
        upload_to_testflight(api_key: api_key)
 
@@ -89,9 +95,7 @@ platform :ios do
 
   lane :release_dev do
     preset_key
-    increment_build_number(
-     build_number: Time.now.strftime("%Y.%m.%d.%H.%M")
-    )
+    setup_number
     build_app(scheme: "dev",
               export_team_id: CredentialsManager::AppfileConfig.try_fetch_value(:team_id),
               export_options: {
@@ -129,6 +133,12 @@ platform :ios do
         lock_when_sleeps: false
         )
     match(git_basic_authorization:ENV["MATCH_GIT_BASIC_AUTHORIZATION"], type: "appstore", readonly: true, keychain_name: keychain_name, keychain_password: keychain_password )
+  end
+
+  lane :setup_number do
+    increment_build_number(
+         build_number: Time.now.strftime("%Y.%m.%d.%H.%M")
+        )
   end
 
   lane :slack_message do
