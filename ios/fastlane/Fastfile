@@ -148,23 +148,23 @@ platform :ios do
   end
 
   def on_error(exception)
-     slack(
-         message: "Some thing goes wrong",
-         success: false,
-         slack_url: "https://hooks.slack.com/services/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",
-         attachment_properties: {
-             fields: [
-                 {
-                     title: "Build number",
-                     value: Time.now.strftime("%Y.%m.%d.%H.%M"),
-                 },
-                 {
-                     title: "Error message",
-                     value: exception.to_s,
-                     short: false
-                 }
-             ]
-         }
-     )
+#      slack(
+#          message: "Some thing goes wrong",
+#          success: false,
+#          slack_url: "https://hooks.slack.com/services/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",
+#          attachment_properties: {
+#              fields: [
+#                  {
+#                      title: "Build number",
+#                      value: Time.now.strftime("%Y.%m.%d.%H.%M"),
+#                  },
+#                  {
+#                      title: "Error message",
+#                      value: exception.to_s,
+#                      short: false
+#                  }
+#              ]
+#          }
+#      )
   end
 end
