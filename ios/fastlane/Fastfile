@@ -66,7 +66,7 @@ platform :ios do
               lock_when_sleeps: false
             )
     match(git_basic_authorization:ENV["MATCH_GIT_BASIC_AUTHORIZATION"], type: "appstore", readonly: true, keychain_name: keychain_name, keychain_password: keychain_password )
-    #disable_automatic_code_signing
+
     increment_build_number(
      build_number: Time.now.strftime("%Y.%m.%d.%H.%M")
     )
@@ -81,18 +81,58 @@ platform :ios do
 #                  }
 #              })
      gym
-     changelog_from_git_commits
-#     # set_changelog
+
      upload_to_testflight(api_key: api_key)
      slack(
        message: "New FlutterBoilerplate iOS App Version Announce!",
        payload: {
-          'Build Number' => Time.now.strftime("%Y.%m.%d.%H.%M"),
-          'Changelog' => Actions.lane_context[SharedValues::FL_CHANGELOG]
+          'Build Number' => Time.now.strftime("%Y.%m.%d.%H.%M")
        },
-       slack_url: ${{ secrets.SLACK_BOT_URL }}
+       slack_url: "https://hooks.slack.com/services/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"
      )
-    # # refresh_dsyms
     #delete_temp_keychain(keychain_name)
+  end
+
+  lane :release_dev do
+    preset_key
+    increment_build_number(
+     build_number: Time.now.strftime("%Y.%m.%d.%H.%M")
+    )
+    build_app(scheme: "dev",
+              export_team_id: CredentialsManager::AppfileConfig.try_fetch_value(:team_id),
+              export_options: {
+                     method: "app-store",
+                     provisioningProfiles: {
+                         "com.example.flutterBoilerplateApp" => "flutterBoilerplateDev"
+                     }
+              }
+    )
+
+  lane :release_staging do
+    preset_key
+    increment_build_number(
+     build_number: Time.now.strftime("%Y.%m.%d.%H.%M")
+    )
+    build_app(scheme: "staging",
+              export_team_id: CredentialsManager::AppfileConfig.try_fetch_value(:team_id),
+              export_options: {
+                     method: "app-store",
+                     provisioningProfiles: {
+                         "com.example.flutterBoilerplateApp" => "flutterBoilerplateStg"
+                     }
+              }
+    )
+  end
+
+  lane :preset_key do
+    create_keychain(
+        name: keychain_name,
+        password: keychain_password,
+        default_keychain: true,
+        unlock: true,
+        timeout: 3600,
+        lock_when_sleeps: false
+        )
+    match(git_basic_authorization:ENV["MATCH_GIT_BASIC_AUTHORIZATION"], type: "appstore", readonly: true, keychain_name: keychain_name, keychain_password: keychain_password )
   end
 end
