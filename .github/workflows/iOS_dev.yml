@@ -2,11 +2,11 @@ name: iOS Package
 
 on:
   push:
-    branches: [ feature/testflight ]
+    branches: [ feature/create ]
   workflow_dispatch:
     inputs:
       environment:
-        description: 'dev, prod'
+        description: 'dev, prod, staging'
         required: true
         default: 'prod'
 
@@ -40,6 +40,10 @@ jobs:
         name: fastlane for dev
         run: |
           cd ./ios && bundle exec fastlane release_dev
+      - if: github.event.inputs.environment == 'staging'
+        name: fastlane for dev
+        run: |
+          cd ./ios && bundle exec fastlane release_staging
 #      - name: Set current date as env variable
 #        run: echo "BuildNumber=$(date +'%Y.%m.%d.%H.%M')" >> $GITHUB_ENV
 #      - name: Get version

@@ -57,6 +57,7 @@ ENV["FASTLANE_XCODEBUILD_SETTINGS_TIMEOUT"] = "120"
 
 platform :ios do
   lane :release_prod do
+
     create_keychain(
               name: keychain_name,
               password: keychain_password,
@@ -71,25 +72,14 @@ platform :ios do
      build_number: Time.now.strftime("%Y.%m.%d.%H.%M")
     )
 
-#      build_app(scheme: "Runner",
-#      export_method: "app-store",
-#      export_team_id: CredentialsManager::AppfileConfig.try_fetch_value(:team_id),
-#      export_options: {
-#                  method: "app-store",
-#                  provisioningProfiles: {
-#                      "com.example.flutterBoilerplateApp" => "flutterBoilerplate"
-#                  }
-#              })
-     gym
+    gym
 
-     upload_to_testflight(api_key: api_key)
-     slack(
-       message: "New FlutterBoilerplate iOS App Version Announce!",
-       payload: {
-          'Build Number' => Time.now.strftime("%Y.%m.%d.%H.%M")
-       },
-       slack_url: "https://hooks.slack.com/services/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"
-     )
+    upload_to_testflight(api_key: api_key)
+
+    slack(
+        message: "iOS: build completed for v(#{Time.now.strftime("%Y.%m.%d.%H.%M")}). Now uploading to testflight.",
+        slack_url: https://hooks.slack.com/services/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
+    )
     #delete_temp_keychain(keychain_name)
   end
 
@@ -107,6 +97,7 @@ platform :ios do
                      }
               }
     )
+  end
 
   lane :release_staging do
     preset_key
@@ -134,5 +125,42 @@ platform :ios do
         lock_when_sleeps: false
         )
     match(git_basic_authorization:ENV["MATCH_GIT_BASIC_AUTHORIZATION"], type: "appstore", readonly: true, keychain_name: keychain_name, keychain_password: keychain_password )
+  end
+
+  # lane :slack_message do
+  #   slack(
+  #         message: "New FlutterBoilerplate iOS App Version Announce!",
+  #         default_payloads: [:git_branch, :last_git_commit_message],
+  #         attachment_properties: {
+  #                 fields: [
+  #                          {
+  #                              title: "Build number",
+  #                              value: Time.now.strftime("%Y.%m.%d.%H.%M"),
+  #                          }
+  #                      ]
+  #                  }
+  #         lack_url: "https://hooks.slack.com/services/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"
+  #        )
+  # end
+
+  def on_error(exception)
+     slack(
+         message: "Some thing goes wrong",
+         success: false,
+         slack_url: "https://hooks.slack.com/services/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",
+         attachment_properties: {
+             fields: [
+                 {
+                     title: "Build number",
+                     value: Time.now.strftime("%Y.%m.%d.%H.%M"),
+                 },
+                 {
+                     title: "Error message",
+                     value: exception.to_s,
+                     short: false
+                 }
+             ]
+         }
+     )
   end
 end
