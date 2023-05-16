@@ -30,9 +30,7 @@ jobs:
 #        run: cd ./ios && bundle install
       - name: Install tools
         run: |
-#          flutter pub get
           cd ./ios
-#          && pod install
       - if: github.event.inputs.environment == 'prod'
         name: fastlane for prod
         run: |
