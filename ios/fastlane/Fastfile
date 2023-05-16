@@ -155,14 +155,7 @@ platform :ios do
     slack(
           message: "New FlutterBoilerplate iOS App Version Announce!",
           default_payloads: [:git_branch, :last_git_commit_message],
-          attachment_properties: {
-                  fields: [
-                           {
-                               title: "Build number",
-                               value: Time.now.strftime("%Y.%m.%d.%H.%M"),
-                           }
-                       ]
-                   }
+          message: "iOS: build completed for v(#{Time.now.strftime("%Y.%m.%d.%H.%M")}). Now uploading to testflight.",
           lack_url: "https://hooks.slack.com/services/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"
          )
   end

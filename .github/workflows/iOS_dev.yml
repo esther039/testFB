@@ -18,20 +18,21 @@ jobs:
     permissions: write-all
     runs-on: macOS-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      - name: Setup Flutter
-        uses: subosito/flutter-action@v1
-        with:
-          flutter-version: '2.8.1'
-      - name: Update Flutter
-        run: flutter upgrade
-      - name: Bundle install
-        run: cd ./ios && bundle install
+#      - name: Checkout
+#        uses: actions/checkout@v2
+#      - name: Setup Flutter
+#        uses: subosito/flutter-action@v1
+#        with:
+#          flutter-version: '2.8.1'
+#      - name: Update Flutter
+#        run: flutter upgrade
+#      - name: Bundle install
+#        run: cd ./ios && bundle install
       - name: Install tools
         run: |
           flutter pub get
-          cd ./ios && pod install
+          cd ./ios
+#          && pod install
       - if: github.event.inputs.environment == 'prod'
         name: fastlane for prod
         run: |
@@ -44,34 +45,4 @@ jobs:
         name: fastlane for stg
         run: |
           cd ./ios && bundle exec fastlane release_staging
-#      - name: Set current date as env variable
-#        run: echo "BuildNumber=$(date +'%Y.%m.%d.%H.%M')" >> $GITHUB_ENV
-#      - name: Get version
-#        id: get_version
-#        run: |
-#          cd ios/Flutter
-#          cat Generated.xcconfig
-#          echo "BuildVersion=$(grep FLUTTER_BUILD_NAME Generated.xcconfig | cut -d'=' -f2)" >> $GITHUB_ENV
-
-#      - name: Send custom JSON data to Slack workflow
-#        if: success()
-#        uses: slackapi/slack-github-action@v1.18.0
-#        with:
-#          payload: "{\"text\": \"Hey there, APP flutter_boilerplate ${{ env.BuildVersion }} ${{ env.BuildNumber }} is published!\\nHave a tea to celebrate, here is link <https://www.pgyer.com/EEHy|View package>\"}"
-#      - name: Get Error Messages
-#        if: ${{ failure() && steps.upload_ipa.conclusion == 'failure' }}
-#        run: echo "ErrorMessage=$(xcrun altool --output-format json --upload-app -f build/ios/ipa/flutter_boilerplate_app.ipa -t ios --apiKey $API_KEY --apiIssuer $API_ISSUER | sed -e 's/-//g' | jq '.producterrors[0].message')" >> $GITHUB_ENV
-#        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_BOT_URL }}
-#      - name: Send custom JSON data to Slack workflow
-#        if: ${{ failure() && steps.upload_ipa.conclusion == 'failure' && env.ErrorMessage != '' }}
-#        uses: slackapi/slack-github-action@v1.18.0
-#        with:
-#          payload: "{\"text\": \"Hey there, APP flutter_boilerplate is fail to publish.\\nHere is error message: ${{ env.ErrorMessage }}\"}"
-#        env:
-#          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_BOT_URL }}
-#      - name: Clean up keychain and provisioning profile
-#        if: ${{ always() }}
-#        run: |
-#          security delete-keychain $RUNNER_TEMP/app-signing.keychain-db
-#          rm ~/Library/MobileDevice/Provisioning\ Profiles/build_pp.mobileprovision
 
