@@ -72,9 +72,9 @@ platform :ios do
         build_number: Time.now.strftime("%Y.%m.%d.%H.%M")
       )
 
-#       gym
+       gym
 #
-#       upload_to_testflight(api_key: api_key)
+       upload_to_testflight(api_key: api_key)
 
       #slack_message
       # slack(
