@@ -69,9 +69,10 @@ platform :ios do
   lane :release_dev do
     begin
       preset_key
+      disable_automatic_code_signing
       setup_number
       build_dev
-      upload
+#       upload
 #       slack_message
       delete_temp_keychain(keychain_name)
     rescue => ex
@@ -134,7 +135,8 @@ platform :ios do
                      method: "app-store",
                      provisioningProfiles: {
                          "com.example.flutterBoilerplateApp" => "flutterBoilerplateDev"
-                     }
+                     },
+                     signingStyle: "manual"
               },
               output_name:"Runner.ipa",
               skip_profile_detection: true
