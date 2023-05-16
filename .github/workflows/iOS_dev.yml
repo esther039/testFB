@@ -41,7 +41,7 @@ jobs:
         run: |
           cd ./ios && bundle exec fastlane release_dev
       - if: github.event.inputs.environment == 'staging'
-        name: fastlane for dev
+        name: fastlane for stg
         run: |
           cd ./ios && bundle exec fastlane release_staging
 #      - name: Set current date as env variable
