@@ -23,6 +23,78 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 
 
 
+### ios release_dev
+
+```sh
+[bundle exec] fastlane ios release_dev
+```
+
+
+
+### ios release_staging
+
+```sh
+[bundle exec] fastlane ios release_staging
+```
+
+
+
+### ios preset_key
+
+```sh
+[bundle exec] fastlane ios preset_key
+```
+
+
+
+### ios setup_number
+
+```sh
+[bundle exec] fastlane ios setup_number
+```
+
+
+
+### ios upload
+
+```sh
+[bundle exec] fastlane ios upload
+```
+
+
+
+### ios build_prod
+
+```sh
+[bundle exec] fastlane ios build_prod
+```
+
+
+
+### ios build_dev
+
+```sh
+[bundle exec] fastlane ios build_dev
+```
+
+
+
+### ios build_stg
+
+```sh
+[bundle exec] fastlane ios build_stg
+```
+
+
+
+### ios slack
+
+```sh
+[bundle exec] fastlane ios slack
+```
+
+
+
 ----
 
 This README.md is auto-generated and will be re-generated every time [_fastlane_](https://fastlane.tools) is run.
