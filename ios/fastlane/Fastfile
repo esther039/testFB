@@ -154,10 +154,11 @@ platform :ios do
   lane :slack_message do
     slack(
         message: "New iOS Flutter App Version Announce!",
+        default_payloads: [:git_branch, :last_git_commit_message],
         payload: {
                 'Build Number' => Time.now.strftime("%Y.%m.%d.%H.%M")
               },
-        slack_url: "https://hooks.slack.com/services/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"
+        slack_url: "https://hooks.slack.com/services/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"
       )
 #     slack(
 #           #message: "New FlutterBoilerplate iOS App Version Announce!",
@@ -171,7 +172,7 @@ platform :ios do
 #      slack(
 #          message: "Some thing goes wrong",
 #          success: false,
-#          slack_url: "https://hooks.slack.com/services/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",
+#          slack_url: "https://hooks.slack.com/services/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",
 #          attachment_properties: {
 #              fields: [
 #                  {
