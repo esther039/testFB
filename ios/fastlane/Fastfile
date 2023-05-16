@@ -163,8 +163,7 @@ platform :ios do
         default_payloads: [:git_branch, :last_git_commit_message],
         payload: {
                 'Build Number' => Time.now.strftime("%Y.%m.%d.%H.%M")
-              },
-        slack_url: "https://hooks.slack.com/services/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"
+              }
       )
   end
 
@@ -172,7 +171,6 @@ platform :ios do
      slack(
          message: "Some thing goes wrong",
          success: false,
-         slack_url: "https://hooks.slack.com/services/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",
          payload: {
              'Build Number' => Time.now.strftime("%Y.%m.%d.%H.%M"),
              'Error message' => exception.to_s
