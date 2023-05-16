@@ -1,4 +1,4 @@
-app_identifier ENV['APP_IDENTIFIER'] # The bundle identifier of your app
+app_identifier("com.example.flutterBoilerplateApp") # The bundle identifier of your app
 apple_id("iphone@wiredcraft.com") # Your Apple Developer Portal username
 
 itc_team_id("119504703") # App Store Connect Team ID
