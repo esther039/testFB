@@ -56,7 +56,7 @@ ENV["FASTLANE_XCODEBUILD_SETTINGS_TIMEOUT"] = "120"
 
 
 platform :ios do
-  lane :release do
+  lane :release_prod do
     create_keychain(
               name: keychain_name,
               password: keychain_password,
