@@ -71,11 +71,11 @@ platform :ios do
       preset_key
       disable_automatic_code_signing
       setup_number
-      update_app_identifier(
-      xcodeproj: "./ios/Runner.xcodeproj",
-      plist_path: "Runner/Info.plist",
-      app_identifier: "com.example.flutterBoilerplateApp.dev"
-      )
+#       update_app_identifier(
+#       xcodeproj: "./ios/Runner.xcodeproj",
+#       plist_path: "Runner/Info.plist",
+#       app_identifier: "com.example.flutterBoilerplateApp.dev"
+#       )
       build_dev
 #       upload
 #       slack_message
