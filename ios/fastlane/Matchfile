@@ -1,4 +1,4 @@
-git_url("git@github.com:estherzhangyue/flutter-certificate.git")
+git_url("https://github.com/estherzhangyue/flutter-certificate.git")
 
 storage_mode("git")
 
