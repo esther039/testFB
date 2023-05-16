@@ -84,11 +84,11 @@ platform :ios do
       preset_key
       setup_number
       build_stg
-      upload
-      slack_message
-      delete_temp_keychain(keychain_name)
+      #upload
+      #slack_message
+      #delete_temp_keychain(keychain_name)
     rescue => ex
-      on_error(ex)
+      #on_error(ex)
     end
   end
 
