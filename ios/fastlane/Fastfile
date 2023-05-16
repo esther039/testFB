@@ -72,10 +72,10 @@ platform :ios do
       setup_number
       build_dev
       upload
-      slack_message
+#       slack_message
       delete_temp_keychain(keychain_name)
     rescue => ex
-      on_error(ex)
+#       on_error(ex)
     end
   end
 
