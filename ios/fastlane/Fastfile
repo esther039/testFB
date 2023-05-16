@@ -31,6 +31,7 @@ api_key = app_store_connect_api_key(
 
 keychain_name = ENV['TEMP_KEYCHAIN_USER']
 keychain_password = ENV["TEMP_KEYCHAIN_PASSWORD"]
+identifier = CredentialsManager::AppfileConfig.try_fetch_value(:app_identifier)
 
 def delete_temp_keychain(name)
   delete_keychain(
@@ -53,23 +54,29 @@ def ensure_temp_keychain(name, password)
 end
 
 platform :ios do
-  lane :release_prod do
+  lane :release do
     begin
-      preset_key
-      setup_number
-      build_prod
-      upload
-      slack_message
-      delete_temp_keychain(keychain_name)
+#       preset_key
+#       setup_number
+      puts "#{identifier}"
+#       build_prod
+#       upload
+#       slack_message
+#       delete_temp_keychain(keychain_name)
     rescue => ex
-      on_error(ex)
+#       on_error(ex)
     end
   end
 
   lane :release_dev do
     begin
       preset_key
-      disable_automatic_code_signing
+#       update_app_identifier(
+#          xcodeproj: "Runner.xcodeproj", # Optional path to xcodeproj, will use the first .xcodeproj if not set
+#          plist_path: "Runner/Info.plist", # Path to info plist file, relative to xcodeproj
+#          app_identifier: "com.example.flutterBoilerplateApp.dev" # The App Identifier
+# )
+      puts "#{identifier}"
       setup_number
 #       update_app_identifier(
 #       xcodeproj: "./ios/Runner.xcodeproj",

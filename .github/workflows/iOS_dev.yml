@@ -35,11 +35,11 @@ jobs:
       - if: github.event.inputs.environment == 'prod'
         name: fastlane for prod
         run: |
-          cd ./ios && bundle exec fastlane release_prod
+          cd ./ios && bundle exec fastlane release
       - if: github.event.inputs.environment == 'dev'
         name: fastlane for dev
         run: |
-          cd ./ios && bundle exec fastlane release_dev
+          cd ./ios && bundle exec fastlane release_dev --env dev
       - if: github.event.inputs.environment == 'staging'
         name: fastlane for stg
         run: |

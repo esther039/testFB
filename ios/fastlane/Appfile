@@ -1,4 +1,4 @@
-app_identifier("com.example.flutterBoilerplateApp") # The bundle identifier of your app
+app_identifier ENV['APP_IDENTIFIER'] # The bundle identifier of your app
 apple_id("iphone@wiredcraft.com") # Your Apple Developer Portal username
 
 itc_team_id("119504703") # App Store Connect Team ID
@@ -6,10 +6,3 @@ team_id("GZG2S47WHM") # Developer Portal Team ID
 
 # For more information about the Appfile, see:
 #     https://docs.fastlane.tools/advanced/#appfile
-
-for_lane :release_dev do
-  app_identifier "com.example.flutterBoilerplateApp.dev"
-  apple_id "iphone@wiredcraft.com"
-  itc_team_id "119504703"
-  team_id "GZG2S47WHM"
-end
