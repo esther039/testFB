@@ -4,7 +4,7 @@ storage_mode("git")
 
 type("development") # The default type, can be: appstore, adhoc, enterprise or development
 
-app_identifier(["com.example.flutterBoilerplateApp"])
+app_identifier(["com.example.flutterBoilerplateApp", "com.example.flutterBoilerplateApp.dev", "com.example.flutterBoilerplateApp.staging"])
 
 ENV["MATCH_PASSWORD"] = "1234"
 username("iphone@wiredcraft.com") # Your Apple Developer Portal username
